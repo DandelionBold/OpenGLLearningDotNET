@@ -143,13 +143,13 @@ We'll create animated, time-based color changes to learn:
 | Phase                    | Status         | Projects Completed |
 | ------------------------ | -------------- | ------------------ |
 | Phase 1: Foundation      | ✅ Complete    | 3/3                |
-| Phase 2: First Triangle  | 🟡 In Progress | 0/4                |
-| Phase 3: 2D Graphics     | ⚪ Not Started | 0/5                |
+| Phase 2: First Triangle  | ✅ Complete    | 4/4                |
+| Phase 3: 2D Graphics     | 🟡 Next Up     | 0/5                |
 | Phase 4: 3D Introduction | ⚪ Not Started | 0/6                |
 | Phase 5: Advanced Topics | ⚪ Not Started | 0/5                |
 | Phase 6: Final Project   | ⚪ Not Started | 0/1                |
 
-**Total Progress**: 3/24 projects (13%)
+**Total Progress**: 7/24 projects (29%)
 
 ---
 
