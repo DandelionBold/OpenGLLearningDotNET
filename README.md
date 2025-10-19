@@ -38,7 +38,7 @@ This course is divided into 6 phases, taking you from complete beginner to confi
 ### Phase 1: Foundation Setup (Week 1 - 3-5 hours) ✅ COMPLETE!
 
 - ✅ **1.1**: Empty window that opens and closes
-- ✅ **1.2**: Window with changing background colors  
+- ✅ **1.2**: Window with changing background colors
 - ✅ **1.3**: Responding to keyboard/mouse input
 
 ### Phase 2: Your First Triangle (Week 1-2 - 8-12 hours) ✅ COMPLETE!
