@@ -7,6 +7,7 @@
 ## 🎨 What You'll See
 
 A triangle with **smooth color gradients**:
+
 - 🔴 **RED** at the top vertex
 - 🟢 **GREEN** at the bottom-left vertex
 - 🔵 **BLUE** at the bottom-right vertex
@@ -26,11 +27,11 @@ A triangle with **smooth color gradients**:
 
 ## 🆕 What's New from Project 2.1
 
-| Project 2.1 | Project 2.2 |
-|-------------|-------------|
-| **Solid Orange** triangle | **Gradient** triangle |
-| 3 floats per vertex (X, Y, Z) | **6 floats** per vertex (X, Y, Z, R, G, B) |
-| One color for whole triangle | **Different color per vertex** |
+| Project 2.1                      | Project 2.2                                 |
+| -------------------------------- | ------------------------------------------- |
+| **Solid Orange** triangle        | **Gradient** triangle                       |
+| 3 floats per vertex (X, Y, Z)    | **6 floats** per vertex (X, Y, Z, R, G, B)  |
+| One color for whole triangle     | **Different color per vertex**              |
 | Fragment shader sets fixed color | Fragment shader uses **interpolated color** |
 
 ---
@@ -42,6 +43,7 @@ A triangle with **smooth color gradients**:
 **Interpolation** means "smoothly filling in values between known points."
 
 **Real-world analogy**:
+
 ```
 Imagine pouring paint from 3 buckets at the triangle corners:
 - Top: RED bucket
@@ -58,25 +60,28 @@ The paint flows and mixes naturally → creating smooth gradients!
 ## 📊 The Data Structure
 
 ### Before (Project 2.1):
+
 ```
 Position Only:
 [X, Y, Z, X, Y, Z, X, Y, Z]
  └vert1┘  └vert2┘  └vert3┘
- 
+
 3 vertices × 3 floats = 9 floats total
 ```
 
 ### Now (Project 2.2):
+
 ```
 Position + Color:
 [X, Y, Z, R, G, B, X, Y, Z, R, G, B, X, Y, Z, R, G, B]
  └─ vertex 1 ────┘  └─ vertex 2 ────┘  └─ vertex 3 ────┘
  └position┘└color┘  └position┘└color┘  └position┘└color┘
- 
+
 3 vertices × 6 floats = 18 floats total
 ```
 
 ### Our Specific Data:
+
 ```
 Vertex 1 (Top):
   Position: ( 0.0,  0.5, 0.0)
@@ -96,6 +101,7 @@ Vertex 3 (Bottom-Right):
 ## 🔧 How It Works: The Complete Pipeline
 
 ### Step 1: C# Sends Data
+
 ```csharp
 float[] vertices = {
     // Vertex 1: position + red
@@ -110,6 +116,7 @@ float[] vertices = {
 ### Step 2: VAO Configuration (TWO Attributes!)
 
 **Attribute 0: Position**
+
 ```csharp
 gl.VertexAttribPointer(
     0,                    // Location 0
@@ -122,6 +129,7 @@ gl.VertexAttribPointer(
 ```
 
 **Attribute 1: Color** (NEW!)
+
 ```csharp
 gl.VertexAttribPointer(
     1,                       // Location 1
@@ -136,14 +144,16 @@ gl.VertexAttribPointer(
 #### Understanding Stride and Offset
 
 **Stride** = "How far to the next vertex?"
+
 ```
 [X Y Z R G B] [X Y Z R G B] [X Y Z R G B]
  └─24 bytes─►
- 
+
 From first X to next X = 6 floats = 24 bytes
 ```
 
 **Offset** = "Where does this attribute start in each vertex?"
+
 ```
 Byte positions:
 [X  Y  Z  R  G  B]
@@ -154,6 +164,7 @@ Color offset: 12 bytes (starts after X, Y, Z)
 ```
 
 ### Step 3: Vertex Shader
+
 ```glsl
 // Inputs (per vertex)
 layout(location = 0) in vec3 aPosition;
@@ -169,6 +180,7 @@ void main() {
 ```
 
 **Runs 3 times**:
+
 - Run 1: aColor = RED → vertexColor = RED
 - Run 2: aColor = GREEN → vertexColor = GREEN
 - Run 3: aColor = BLUE → vertexColor = BLUE
@@ -187,6 +199,7 @@ Pixel between red and green:      vertexColor ≈ (0.5, 0.5, 0.0) YELLOW
 **You don't write ANY code for this! The GPU does it automatically!**
 
 ### Step 5: Fragment Shader
+
 ```glsl
 // Input (interpolated by GPU!)
 in vec3 vertexColor;
@@ -210,6 +223,7 @@ void main() {
 **ANY variable marked as `out` in vertex shader and `in` in fragment shader!**
 
 In this project:
+
 - We output `vertexColor` from vertex shader
 - GPU interpolates it
 - Fragment shader receives interpolated value
@@ -217,6 +231,7 @@ In this project:
 ### How Interpolation Works (Math)
 
 For a pixel at position P between three vertices:
+
 ```
 color_at_P = (w1 × color1) + (w2 × color2) + (w3 × color3)
 
@@ -225,6 +240,7 @@ where w1, w2, w3 are weights based on distance from vertices
 ```
 
 **Example**:
+
 - Pixel exactly at red vertex: w1=1, w2=0, w3=0 → RED
 - Pixel exactly at green vertex: w1=0, w2=1, w3=0 → GREEN
 - Pixel in center: w1=0.33, w2=0.33, w3=0.33 → GRAY (mix of all)
@@ -239,21 +255,26 @@ where w1, w2, w3 are weights based on distance from vertices
 Interpolation is the FOUNDATION of all graphics:
 
 ### 1. Textures (Project 3.x)
+
 ```glsl
 out vec2 texCoord;  // Texture coordinates
 ```
+
 → GPU interpolates texture coordinates
 → This is how images wrap onto 3D models!
 
 ### 2. Lighting (Project 4.x)
+
 ```glsl
 out vec3 normal;    // Surface normal
 out vec3 fragPos;   // Fragment position
 ```
+
 → GPU interpolates normals and positions
 → This is how smooth lighting works!
 
 ### 3. Everything Else
+
 - Normal mapping
 - Parallax mapping
 - Ambient occlusion
@@ -269,6 +290,7 @@ out vec3 fragPos;   // Fragment position
 ### Q: Does the GPU really do this automatically?
 
 **A**: YES! Completely automatic! You just:
+
 1. Mark variable as `out` in vertex shader
 2. Mark same variable as `in` in fragment shader
 3. GPU handles the rest!
@@ -276,6 +298,7 @@ out vec3 fragPos;   // Fragment position
 ### Q: Can I have multiple interpolated values?
 
 **A**: YES! You can have as many as you want:
+
 ```glsl
 out vec3 color;
 out vec2 texCoord;
@@ -287,6 +310,7 @@ out float customValue;
 ### Q: Can I disable interpolation?
 
 **A**: Yes! Use the `flat` qualifier:
+
 ```glsl
 flat out vec3 color;  // No interpolation - same value for whole triangle
 ```
@@ -294,6 +318,7 @@ flat out vec3 color;  // No interpolation - same value for whole triangle
 ### Q: What if I interpolate non-color data?
 
 **A**: Works perfectly! Interpolation works for ANY data:
+
 - Positions
 - Normals
 - Texture coordinates
@@ -302,12 +327,14 @@ flat out vec3 color;  // No interpolation - same value for whole triangle
 
 ### Q: Why 6 floats per vertex now?
 
-**A**: 
+**A**:
+
 - 3 for position (X, Y, Z)
 - 3 for color (R, G, B)
 - Total: 6 floats
 
 If you add more attributes later, it gets bigger:
+
 - Position (3) + Color (3) + TexCoord (2) = 8 floats
 - Position (3) + Normal (3) + Color (4) + TexCoord (2) = 12 floats
 
@@ -318,6 +345,7 @@ If you add more attributes later, it gets bigger:
 ### 1. Different Colors
 
 Try making all vertices the same color:
+
 ```csharp
 // All red
  0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
@@ -348,22 +376,26 @@ Try making all vertices the same color:
 In `shader.frag`, try:
 
 **Grayscale**:
+
 ```glsl
 float gray = (vertexColor.r + vertexColor.g + vertexColor.b) / 3.0;
 FragColor = vec4(gray, gray, gray, 1.0);
 ```
 
 **Inverted Colors**:
+
 ```glsl
 FragColor = vec4(1.0 - vertexColor, 1.0);
 ```
 
 **Only Red Channel**:
+
 ```glsl
 FragColor = vec4(vertexColor.r, 0.0, 0.0, 1.0);
 ```
 
 **Brighten**:
+
 ```glsl
 FragColor = vec4(vertexColor * 2.0, 1.0);
 ```
@@ -401,11 +433,13 @@ That's the power of modern graphics hardware! 🚀
 ## 🎯 Next Steps
 
 **Project 2.3: Rotating Triangle**
+
 - Learn transformation matrices
 - Make the triangle SPIN!
 - Understand uniform variables
 
 **Project 2.4: Multiple Shapes**
+
 - Element Buffer Objects (EBO)
 - Draw efficiently with indices
 - Multiple objects at once
@@ -415,10 +449,10 @@ That's the power of modern graphics hardware! 🚀
 **Congratulations!** You now understand one of the most fundamental concepts in computer graphics! 🎉
 
 The smooth color blending you see is the SAME technique used for:
+
 - Realistic lighting in games
 - Texture mapping on 3D models
 - Normal mapping for detailed surfaces
 - Everything visual in modern games!
 
 You're building a strong foundation! 🏗️✨
-
