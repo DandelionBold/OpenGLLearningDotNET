@@ -35,25 +35,26 @@ OpenGLLearning/
 
 This course is divided into 6 phases, taking you from complete beginner to confident OpenGL developer.
 
-### Phase 1: Foundation Setup (Week 1 - 3-5 hours) 🟡
+### Phase 1: Foundation Setup (Week 1 - 3-5 hours) ✅ COMPLETE!
 
 - ✅ **1.1**: Empty window that opens and closes
-- ⏳ **1.2**: Window with changing background colors
-- ⏳ **1.3**: Responding to keyboard/mouse input
+- ✅ **1.2**: Window with changing background colors  
+- ✅ **1.3**: Responding to keyboard/mouse input
 
-### Phase 2: Your First Triangle (Week 1-2 - 8-12 hours) ⚪
+### Phase 2: Your First Triangle (Week 1-2 - 8-12 hours) ✅ COMPLETE!
 
-- Vertex Buffer Objects (VBO)
-- Vertex Array Objects (VAO)
-- Shaders (GLSL basics)
-- Drawing your first triangle
+- ✅ **2.1**: Colored Triangle - VBO, VAO, Shaders, Pipeline
+- ✅ **2.2**: Multi-Color Triangle - Gradients & GPU Interpolation
+- ✅ **2.3**: Rotating Triangle - Matrices & Transformations
+- ✅ **2.4**: Multiple Shapes - Index Buffers (EBO)
 
-### Phase 3: 2D Graphics Mastery (Week 3-5 - 15-20 hours) ⚪
+### Phase 3: 2D Graphics Mastery (Week 3-5 - 15-20 hours) 🟡 NEXT!
 
-- Texture mapping
-- Sprite rendering
-- 2D transformations
-- Simple 2D game
+- ⏳ **3.1**: Textured Quad - Load and display images
+- ⏳ **3.2**: Sprite Animation - Sprite sheets
+- ⏳ **3.3**: Moving Sprites - Keyboard control
+- ⏳ **3.4**: Simple 2D Game - Pong or Breakout!
+- ⏳ **3.5**: Particle System - Effects
 
 ### Phase 4: Introduction to 3D (Week 6-8 - 20-25 hours) ⚪
 
