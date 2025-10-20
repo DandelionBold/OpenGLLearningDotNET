@@ -131,6 +131,3 @@ class Program
     private static uint Compile(ShaderType t, string s)
     { uint sh = gl!.CreateShader(t); gl.ShaderSource(sh,s); gl.CompileShader(sh); gl.GetShader(sh, ShaderParameterName.CompileStatus, out int ok); if(ok==0) throw new Exception(gl.GetShaderInfoLog(sh)); return sh; }
 }
-
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");

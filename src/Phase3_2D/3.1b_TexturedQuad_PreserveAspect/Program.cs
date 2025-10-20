@@ -101,6 +101,3 @@ class Program
     private static uint CreateShaderProgram(string vp,string fp){ string v=File.ReadAllText(vp); string f=File.ReadAllText(fp); uint vs=Compile(ShaderType.VertexShader,v); uint fs=Compile(ShaderType.FragmentShader,f); uint prog=gl!.CreateProgram(); gl.AttachShader(prog,vs); gl.AttachShader(prog,fs); gl.LinkProgram(prog); gl.GetProgram(prog,ProgramPropertyARB.LinkStatus,out int ok); if(ok==0) throw new Exception(gl.GetProgramInfoLog(prog)); gl.DeleteShader(vs); gl.DeleteShader(fs); return prog; }
     private static uint Compile(ShaderType t,string s){ uint id=gl!.CreateShader(t); gl.ShaderSource(id,s); gl.CompileShader(id); gl.GetShader(id,ShaderParameterName.CompileStatus,out int ok); if(ok==0) throw new Exception(gl.GetShaderInfoLog(id)); return id; }
 }
-
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
