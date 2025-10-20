@@ -48,9 +48,9 @@ This course is divided into 6 phases, taking you from complete beginner to confi
 - ✅ **2.3**: Rotating Triangle - Matrices & Transformations
 - ✅ **2.4**: Multiple Shapes - Index Buffers (EBO)
 
-### Phase 3: 2D Graphics Mastery (Week 3-5 - 15-20 hours) 🟡 NEXT!
+### Phase 3: 2D Graphics Mastery (Week 3-5 - 15-20 hours) 🟡 IN PROGRESS
 
-- ⏳ **3.1**: Textured Quad - Load and display images
+- ✅ **3.1**: Textured Quad - Load and display images (with aspect-preserving variant 3.1b)
 - ⏳ **3.2**: Sprite Animation - Sprite sheets
 - ⏳ **3.3**: Moving Sprites - Keyboard control
 - ⏳ **3.4**: Simple 2D Game - Pong or Breakout!
@@ -225,5 +225,15 @@ Happy coding! 🚀✨
 
 ---
 
-**Current Status**: Phase 2 COMPLETE! ✅ (29% of entire course!)  
-**Next Up**: Phase 3 - 2D Graphics Mastery (Textures & Games!)
+**Current Status**: Phase 3 IN PROGRESS — 3.1 complete ✅  
+Run examples (PowerShell):
+
+```
+# Baseline 3.1
+dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
+
+# Aspect-preserving variant
+dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_TexturedQuad_PreserveAspect.csproj
+```
+
+Note: PowerShell doesn't support '&&'. Run commands separately or use `dotnet run --project` as shown.

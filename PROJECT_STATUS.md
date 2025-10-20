@@ -32,13 +32,15 @@ test/
 
 ---
 
-## 🎯 Current Phase: Phase 1 - Foundation Setup
+## 🎯 Current Phase: Phase 3 - 2D Graphics
 
 ### Progress
 
-- [x] **Project 1.1**: Empty window that opens and closes ✅
-- [x] **Project 1.2**: Window with changing background colors ✅
-- [x] **Project 1.3**: Responding to keyboard/mouse input ✅
+- [x] **Project 3.1**: Textured Quad (baseline and 3.1b preserve-aspect) ✅
+- [ ] **Project 3.2**: Sprite Animation ⏳
+- [ ] **Project 3.3**: Moving Sprites ⏳
+- [ ] **Project 3.4**: Simple 2D Game ⏳
+- [ ] **Project 3.5**: Particle System ⏳
 
 **Phase 1 Status: COMPLETE! 🎉**
 
@@ -46,11 +48,10 @@ test/
 
 ## 🚀 How to Run
 
-### Option 1: Using dotnet CLI
+### Run (PowerShell-friendly)
 
 ```bash
-cd src/Phase1_Foundation/1.1_EmptyWindow
-dotnet run
+dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
 ```
 
 ### Option 2: Using Visual Studio
