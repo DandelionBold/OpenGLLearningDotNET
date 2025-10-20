@@ -1,11 +1,11 @@
 # OpenGL Learning Journey - Progress Summary
 
-**Last Updated**: October 19, 2025  
+**Last Updated**: October 20, 2025  
 **Repository**: https://github.com/DandelionBold/OpenGLLearningDotNET.git
 
 ---
 
-## 🎉 Overall Progress: 7/24 Projects (29%)
+## 🎉 Overall Progress: 8/24 Projects (33%)
 
 ---
 
@@ -88,10 +88,14 @@
 
 ---
 
-## ⚪ Phase 3: 2D Graphics Mastery - **NOT STARTED**
+## 🟡 Phase 3: 2D Graphics Mastery - **IN PROGRESS**
 
-**Status**: ⚪ 0% Complete (0/5 projects)  
+**Status**: 🟡 20% Complete (1/5 projects)  
 **Projects**: Textures, Sprites, Animations, 2D Game, Particle System
+
+### Projects Completed
+- ✅ Project 3.1: Textured Quad — load image, UVs, sampling, ortho projection
+  - Variant 3.1b preserves image aspect via model scale (width/height)
 
 ---
 
@@ -188,7 +192,7 @@
 ⚠️  Minor warnings (null reference checks)
 ```
 
-### Solution Structure
+### Solution Structure (excerpt)
 
 ```
 OpenGLLearning/
@@ -203,27 +207,21 @@ OpenGLLearning/
     │   ├── 1.1_EmptyWindow/ ✅
     │   ├── 1.2_ChangingColors/ ✅
     │   └── 1.3_InputHandling/ ✅
-    └── Phase2_FirstTriangle/
-        ├── 2.1_ColoredTriangle/ ✅
-        └── 2.2_MultiColorTriangle/ ⏳ (structure only)
+    ├── Phase2_FirstTriangle/ (all complete)
+    └── Phase3_2D/
+        ├── 3.1_TexturedQuad/ ✅
+        └── 3.1b_TexturedQuad_PreserveAspect/ ✅
 ```
 
 ---
 
 ## 🚀 How to Run the Projects
 
-### Option 1: Run Specific Project
+### Preferred (PowerShell-friendly)
 
-```bash
-cd src/Phase1_Foundation/1.1_EmptyWindow
-dotnet run
 ```
-
-### Option 2: Build All & Run
-
-```bash
-dotnet build OpenGLLearning.sln
-.\src\Phase1_Foundation\1.1_EmptyWindow\bin\Debug\net9.0\1.1_EmptyWindow.exe
+dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
+dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_TexturedQuad_PreserveAspect.csproj
 ```
 
 ### Phase 1 Projects
@@ -232,9 +230,9 @@ dotnet build OpenGLLearning.sln
 - **1.2**: Animated colors (Press SPACE to change modes)
 - **1.3**: Interactive color control (R/G/B keys, mouse clicks)
 
-### Phase 2 Projects
+### Phase 3 Projects
 
-- **2.1**: Orange triangle (your first rendered geometry!)
+- **3.1**: Textured Quad (baseline + preserve-aspect variant)
 
 ---
 
