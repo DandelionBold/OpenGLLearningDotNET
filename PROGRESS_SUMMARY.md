@@ -94,6 +94,7 @@
 **Projects**: Textures, Sprites, Animations, 2D Game, Particle System
 
 ### Projects Completed
+
 - ✅ Project 3.1: Textured Quad — load image, UVs, sampling, ortho projection
   - Variant 3.1b preserves image aspect via model scale (width/height)
 
