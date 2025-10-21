@@ -211,12 +211,17 @@ class Program
         // -----------------------------
         // 5) COMPILE/LINK GLSL SHADERS
         // -----------------------------
-        shaderProgram = CreateShaderProgram("Shaders/shader.vert", "Shaders/shader.frag");
+        // Get the directory where the executable is located
+        string exeDir = AppDomain.CurrentDomain.BaseDirectory;
+        string vertPath = Path.Combine(exeDir, "Shaders", "shader.vert");
+        string fragPath = Path.Combine(exeDir, "Shaders", "shader.frag");
+        shaderProgram = CreateShaderProgram(vertPath, fragPath);
 
         // ------------------------------------------------------------
         // 6) LOAD SPRITE SHEET TEXTURE
         // ------------------------------------------------------------
-        textureId = LoadTexture("textures/sprite_sheet.png");
+        string texturePath = Path.Combine(exeDir, "textures", "sprite_sheet.png");
+        textureId = LoadTexture(texturePath);
         if (textureId == 0)
         {
             Console.WriteLine("WARNING: Sprite sheet not found. Place a PNG at textures/sprite_sheet.png");

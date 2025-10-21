@@ -1,24 +1,14 @@
 #version 330 core
 
 // ============================================================================
-// FRAGMENT SHADER - SPRITE ANIMATION (HEAVILY COMMENTED WITH VISUAL DIAGRAMS)
+// FRAGMENT SHADER - SPRITE ANIMATION (HEAVILY COMMENTED)
 // ============================================================================
-// PURPOSE:
-//   Runs once per PIXEL inside the triangle(s).
-//   - Receives animated UVs from vertex shader
-//   - Samples the sprite sheet texture at those UVs
-//   - Writes the resulting color to the screen
+// PURPOSE: Runs once per PIXEL inside the triangle(s)
+// - Receives animated UVs from vertex shader
+// - Samples the sprite sheet texture at those UVs  
+// - Writes the resulting color to the screen
 //
-// INPUTS (from vertex shader):
-//   in vec2 vTexCoord  -> animated UV coordinates (base + offset)
-//
-// UNIFORMS (set from C# code):
-//   uniform sampler2D uTexture0  -> sprite sheet texture bound to GL_TEXTURE0
-//
-// OUTPUTS:
-//   out vec4 FragColor -> final pixel color written to the framebuffer
-//
-// SPRITE SHEET SAMPLING WITH VISUAL DIAGRAM:
+// SPRITE SHEET CONCEPT:
 //   The texture contains multiple animation frames arranged in a grid.
 //   vTexCoord points to the correct frame based on the UV offset applied
 //   in the vertex shader.
@@ -30,7 +20,7 @@
 //   │ Frame 3 │ Frame 4 │ Frame 5 │   │  ← UVs: (0,0)-(0.25,0.5), (0.25,0)-(0.5,0.5), etc.
 //   └─────────┴─────────┴─────────┘   │
 //
-// UV COORDINATE SYSTEM EXPLANATION:
+// UV COORDINATE SYSTEM:
 //   UV coordinates go from 0.0 to 1.0 across the entire texture:
 //   - (0.0, 0.0) = bottom-left corner of texture
 //   - (1.0, 1.0) = top-right corner of texture
@@ -55,7 +45,7 @@
 // INPUTS FROM VERTEX SHADER
 in vec2 vTexCoord;        // animated UV coordinates from vertex shader
 
-// OUTPUT TO FRAMEBUFFER
+// OUTPUT TO FRAMEBUFFER  
 out vec4 FragColor;       // final color output (RGBA)
 
 // UNIFORMS FROM C# CODE
@@ -83,7 +73,7 @@ void main()
     // We can discard these pixels to create sprites that don't show
     // the background color.
     //
-    // Uncomment the next two lines to enable transparency:
+    // Uncomment the next line to enable transparency:
     // if (FragColor.a < 0.1) discard;
     
     // ========================================================================
