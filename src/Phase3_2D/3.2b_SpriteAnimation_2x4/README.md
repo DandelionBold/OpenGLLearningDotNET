@@ -120,9 +120,9 @@ float animationFPS = 12f; // Animation speed (frames per second)
 float horizontalSpacing = 0.0f;  // Horizontal spacing between frames (0.0 = no spacing)
 float verticalSpacing = 0.0f;    // Vertical spacing between frames (0.0 = no spacing)
 
-// 🔮 FUTURE: Padding parameters for sprite sheets with frame padding
-float horizontalPadding = 0.0f;  // Horizontal padding around each frame (0.0 = no padding)
-float verticalPadding = 0.0f;    // Vertical padding around each frame (0.0 = no padding)
+// 🔮 FUTURE: Padding parameters for sprite sheets with image padding
+float horizontalPadding = 0.0f;  // Horizontal padding around entire image (0.0 = no padding)
+float verticalPadding = 0.0f;    // Vertical padding around entire image (0.0 = no padding)
 ```
 
 ### Frame Calculation (The Math!)
@@ -291,7 +291,7 @@ FragColor = pow(FragColor, vec4(1.2));             // Increase contrast
 ### Spacing vs Padding - What's the Difference?
 
 **Spacing** = Gaps **between** frames
-**Padding** = Gaps **around** each frame (inside the frame boundary)
+**Padding** = Gaps **around the entire sprite sheet image**
 
 ### Visual Example:
 
@@ -301,14 +301,15 @@ SPACING (between frames):
 │ Frame 0 │       │ Frame 1 │       │ Frame 2 │
 └─────────┘       └─────────┘       └─────────┘
 
-PADDING (around each frame):
-┌─────────────┐
-│    PADDING  │
-│ ┌─────────┐ │
-│ │ Content │ │  ← Actual sprite content
-│ └─────────┘ │
-│    PADDING  │
-└─────────────┘
+PADDING (around entire image):
+┌─────────────────────────────────┐
+│           PADDING               │
+│ ┌─────────────────────────────┐ │
+│ │ Frame 0 │ Frame 1 │ Frame 2 │ │  ← Actual sprite sheet content
+│ │ Frame 3 │ Frame 4 │ Frame 5 │ │
+│ └─────────────────────────────┘ │
+│           PADDING               │
+└─────────────────────────────────┘
 ```
 
 ### When to Use Each:
@@ -319,19 +320,15 @@ PADDING (around each frame):
 - Example: `horizontalSpacing = 0.02f` (2% gap between frames)
 
 **Use Padding when:**
-- Each frame has empty space around the actual sprite content
-- You want to crop out the padding to show only the sprite
-- Example: `horizontalPadding = 0.01f` (1% padding around each frame)
+- The entire sprite sheet has empty space around it
+- You want to crop out the padding to show only the sprite sheet content
+- Example: `horizontalPadding = 0.01f` (1% padding around entire image)
 
 ### Future Implementation:
 
 When these parameters are implemented, the UV calculation would be:
 ```csharp
-// Effective frame size (accounting for padding)
-float effectiveFrameWidth = frameWidth - (2 * horizontalPadding);
-float effectiveFrameHeight = frameHeight - (2 * verticalPadding);
-
-// UV offset calculation (accounting for spacing)
+// UV offset calculation (accounting for spacing and image padding)
 float uOffset = col * (frameWidth + horizontalSpacing) + horizontalPadding;
 float vOffset = row * (frameHeight + verticalSpacing) + verticalPadding;
 ```
