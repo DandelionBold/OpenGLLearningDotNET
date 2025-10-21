@@ -14,6 +14,7 @@ This project teaches you how to create animated sprites using sprite sheets (tex
 ## 🎬 How It Works (Step-by-Step Walkthrough)
 
 ### Step 1: Understanding Sprite Sheets
+
 A sprite sheet is like a **comic book page** with multiple panels:
 
 ```
@@ -27,6 +28,7 @@ A sprite sheet is like a **comic book page** with multiple panels:
 **Analogy**: Think of it like a **flipbook** where each page is a frame, but instead of flipping pages, we move our "viewing window" across the sprite sheet.
 
 ### Step 2: UV Coordinate System
+
 UV coordinates are like **map coordinates** for textures:
 
 ```
@@ -46,6 +48,7 @@ Frame 3: (0.75, 0.0) to (1.0, 1.0)
 ```
 
 ### Step 3: Animation Technique (The Magic!)
+
 We don't change the texture - we change **where we look**:
 
 ```
@@ -64,6 +67,7 @@ Base UVs (Frame 0):     UV Offset:        Final UVs (Frame 2):
 ### Texture Filtering Comparison
 
 **Linear Filtering (Smooth)** - Like looking through frosted glass:
+
 ```
 Original Pixels:     Linear Result:
 ┌─┬─┬─┐              ┌─────────┐
@@ -73,6 +77,7 @@ Original Pixels:     Linear Result:
 ```
 
 **Nearest Filtering (Crisp)** - Like looking through clear glass:
+
 ```
 Original Pixels:     Nearest Result:
 ┌─┬─┬─┐              ┌─────────┐
@@ -105,6 +110,7 @@ Interpolated UVs create smooth gradients:
 ## 🔧 Technical Implementation
 
 ### Animation Parameters
+
 ```csharp
 int framesPerRow = 4;     // How many frames per row (like columns in a table)
 int totalFrames = 8;      // Total animation frames (like pages in a flipbook)
@@ -116,6 +122,7 @@ float animationFPS = 10f; // Animation speed (frames per second)
 ```
 
 ### Frame Calculation (The Math!)
+
 ```csharp
 // Step 1: Calculate frame duration
 float frameDuration = 1.0f / animationFPS;  // 0.1 seconds for 10 FPS
@@ -133,6 +140,7 @@ float vOffset = (currentFrame / framesPerRow) * frameHeight;
 ## 🎮 Shader Overview (Heavily Commented)
 
 ### Vertex Shader (`shader.vert`)
+
 ```glsl
 // INPUTS: Position and base UVs (for frame 0)
 layout(location = 0) in vec3 aPosition;   // Where the vertex is
@@ -149,13 +157,14 @@ void main()
 {
     // Add UV offset to show current animation frame
     vTexCoord = aTexCoord + uUVOffset;
-    
+
     // Convert position to screen coordinates
     gl_Position = uProjection * vec4(aPosition, 1.0);
 }
 ```
 
 ### Fragment Shader (`shader.frag`)
+
 ```glsl
 // INPUTS: Animated UVs from vertex shader
 in vec2 vTexCoord;
@@ -170,7 +179,7 @@ void main()
 {
     // Sample the sprite sheet at animated UVs
     FragColor = texture(uTexture0, vTexCoord);
-    
+
     // Optional: Add transparency support
     // if (FragColor.a < 0.1) discard;
 }
@@ -179,21 +188,25 @@ void main()
 ## 🎯 Beginner-Friendly Analogies
 
 ### 1. Sprite Sheet = Comic Book
+
 - **Frames** = Individual comic panels
 - **Animation** = Quickly flipping through panels
 - **UV Offset** = Moving your finger to point at different panels
 
 ### 2. UV Coordinates = Map Coordinates
+
 - **Texture** = A city map
 - **UVs** = Street addresses (0.0 to 1.0)
 - **Sampling** = Looking up what's at a specific address
 
 ### 3. Animation = Magic Window
+
 - **Sprite Sheet** = Large painting
 - **Quad** = Magic window that shows part of the painting
 - **UV Offset** = Moving the window to show different parts
 
 ### 4. Frame Timing = Clock Ticking
+
 - **Time** = Clock hands moving
 - **FPS** = How fast the clock ticks
 - **Current Frame** = Which hour the clock shows
@@ -209,6 +222,7 @@ dotnet run
 ## 🧪 Experiments (Try These!)
 
 ### 1. Change Animation Speed
+
 ```csharp
 // Try different speeds:
 float animationFPS = 5f;   // Slow motion
@@ -217,19 +231,25 @@ float animationFPS = 30f;  // Very fast
 ```
 
 ### 2. Debug UV Visualization
+
 Uncomment this line in the fragment shader:
+
 ```glsl
 FragColor = vec4(vTexCoord, 0.0, 1.0);  // Shows UV coordinates as colors
 ```
 
 ### 3. Add Transparency
+
 Uncomment this line in the fragment shader:
+
 ```glsl
 if (FragColor.a < 0.1) discard;  // Discard transparent pixels
 ```
 
 ### 4. Color Effects
+
 Try these in the fragment shader:
+
 ```glsl
 FragColor = FragColor * vec4(1.0, 0.5, 0.5, 1.0);  // Red tint
 FragColor = FragColor * 1.5;                        // Brighten
@@ -247,6 +267,7 @@ FragColor = pow(FragColor, vec4(1.2));             // Increase contrast
 5. **Update Parameters**: Adjust `framesPerRow` and `totalFrames`
 
 ### Example Layout:
+
 ```
 4x2 Sprite Sheet (4 frames per row, 2 rows):
 ┌─────────────────────────────────┐
@@ -259,31 +280,38 @@ FragColor = pow(FragColor, vec4(1.2));             // Increase contrast
 ## 🔍 Common Issues & Solutions
 
 ### Issue: No Animation
+
 **Cause**: Sprite sheet not found or parameters incorrect
 **Solution**: Check that `sprite_sheet.png` exists and `framesPerRow` matches your layout
 
 ### Issue: Wrong Frame Size
+
 **Cause**: `framesPerRow` doesn't match sprite sheet layout
 **Solution**: Count frames per row in your sprite sheet and update the parameter
 
 ### Issue: Blurry Sprites
+
 **Cause**: Using linear filtering instead of nearest
 **Solution**: Ensure texture filtering is set to `Nearest` in the C# code
 
 ### Issue: Frames Skipping
+
 **Cause**: `animationFPS` too high or `totalFrames` wrong
 **Solution**: Lower `animationFPS` or verify `totalFrames` count
 
 ### Issue: Sprite Cut-Off or Frame Bleeding ⚠️ CRITICAL!
+
 **Cause**: Sprite sheet dimensions don't match frame layout math
 **Solution**: **The sprite sheet dimensions MUST exactly match the frame layout!**
 
 **Example Problem:**
+
 - You have 8 frames, each 100 px wide
 - Expected width: 8 × 100 = **800 px** ✓
 - Actual width: **790 px** ❌ (WRONG!)
 
 **The Math Behind It:**
+
 ```
 Code calculates UV width: 1.0 / 8 = 0.125 (assumes 800 px)
 But actual frame width: 100 / 790 = 0.1266 (different!)
@@ -292,10 +320,12 @@ Result: UV coordinates don't align with frame boundaries = cut-off/bleeding!
 
 **The Fix:**
 Resize your sprite sheet to match the math:
+
 - 8 frames × 100 px = **800 px total width** ✓
 - 1 row × 201 px = **201 px total height** ✓
 
 **Formula:**
+
 ```
 Total Width = Frames Per Row × Frame Width
 Total Height = Number of Rows × Frame Height
