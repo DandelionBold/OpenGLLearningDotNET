@@ -14,11 +14,13 @@
 //   in the vertex shader.
 //
 //   Example sprite sheet layout (4 frames per row):
-//   ┌─────────────────────────────────┐
-//   │ Frame 0 │ Frame 1 │ Frame 2 │   │  ← UVs: (0,0)-(0.25,1), (0.25,0)-(0.5,1), etc.
-//   ├─────────┼─────────┼─────────┤   │
-//   │ Frame 3 │ Frame 4 │ Frame 5 │   │  ← UVs: (0,0)-(0.25,0.5), (0.25,0)-(0.5,0.5), etc.
-//   └─────────┴─────────┴─────────┘   │
+//   +-------------------+-------------------+-------------------+
+//   | Frame 0           | Frame 1           | Frame 2           |
+//   | UVs: (0,0)-(0.25,1) | UVs: (0.25,0)-(0.5,1) | UVs: (0.5,0)-(0.75,1) |
+//   +-------------------+-------------------+-------------------+
+//   | Frame 3           | Frame 4           | Frame 5           |
+//   | UVs: (0,0)-(0.25,0.5) | UVs: (0.25,0)-(0.5,0.5) | UVs: (0.5,0)-(0.75,0.5) |
+//   +-------------------+-------------------+-------------------+
 //
 // UV COORDINATE SYSTEM:
 //   UV coordinates go from 0.0 to 1.0 across the entire texture:
@@ -32,9 +34,9 @@
 //   For sprites, we use NEAREST filtering to get pixel-perfect, crisp edges.
 //
 //   Linear Filtering (smooth):     Nearest Filtering (crisp):
-//   ┌─┬─┬─┐                       ┌─┬─┬─┐
-//   │█│▒│░│  →  smooth gradient   │█│█│░│  →  sharp edges
-//   └─┴─┴─┘                       └─┴─┴─┘
+//   +---+---+---+                  +---+---+---+
+//   |###|%%%|...|  ->  smooth       |###|###|...|  ->  sharp edges
+//   +---+---+---+       gradient    +---+---+---+
 //
 // ALPHA CHANNEL AND TRANSPARENCY:
 //   Textures can have an alpha channel (RGBA) for transparency.
