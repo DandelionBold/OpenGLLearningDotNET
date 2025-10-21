@@ -365,24 +365,34 @@ class Program
         // Each vertex has 5 components: x, y, z, u, v
         // UV indices: vertex 0 = [3,4], vertex 1 = [8,9], vertex 2 = [13,14], vertex 3 = [18,19]
         
-        // Top-left vertex (U = 0.0, V = 0.0)
-        quadVertices[3] = 0.0f;        // U coordinate
-        quadVertices[4] = 0.0f;        // V coordinate
+        // Calculate UV coordinates with padding and spacing
+        // Padding is added to all coordinates (around entire image)
+        // Spacing affects the effective frame size but not the base UVs
         
-        // Bottom-left vertex (U = 0.0, V = frameHeight)
-        quadVertices[8] = 0.0f;        // U coordinate
-        quadVertices[9] = frameHeight; // V coordinate (height of ONE frame)
+        float uStart = horizontalPadding;                    // Start U with padding
+        float uEnd = frameWidth + horizontalPadding;        // End U with padding
+        float vStart = verticalPadding;                     // Start V with padding
+        float vEnd = frameHeight + verticalPadding;          // End V with padding
         
-        // Bottom-right vertex (U = frameWidth, V = frameHeight)
-        quadVertices[13] = frameWidth; // U coordinate (width of ONE frame)
-        quadVertices[14] = frameHeight; // V coordinate (height of ONE frame)
+        // Top-left vertex (U = padding, V = padding)
+        quadVertices[3] = uStart;        // U coordinate
+        quadVertices[4] = vStart;        // V coordinate
         
-        // Top-right vertex (U = frameWidth, V = 0.0)
-        quadVertices[18] = frameWidth; // U coordinate (end of ONE frame)
-        quadVertices[19] = 0.0f;       // V coordinate
+        // Bottom-left vertex (U = padding, V = frameHeight + padding)
+        quadVertices[8] = uStart;        // U coordinate
+        quadVertices[9] = vEnd;          // V coordinate (height of ONE frame + padding)
         
-        Console.WriteLine($"  Quad UVs auto-calculated: (0.0, 0.0) to ({frameWidth:F4}, {frameHeight:F4})");
+        // Bottom-right vertex (U = frameWidth + padding, V = frameHeight + padding)
+        quadVertices[13] = uEnd;         // U coordinate (width of ONE frame + padding)
+        quadVertices[14] = vEnd;         // V coordinate (height of ONE frame + padding)
+        
+        // Top-right vertex (U = frameWidth + padding, V = padding)
+        quadVertices[18] = uEnd;         // U coordinate (width of ONE frame + padding)
+        quadVertices[19] = vStart;       // V coordinate
+        
+        Console.WriteLine($"  Quad UVs auto-calculated: ({uStart:F4}, {vStart:F4}) to ({uEnd:F4}, {vEnd:F4})");
         Console.WriteLine($"  This shows exactly ONE frame from the 2x4 sprite sheet.");
+        Console.WriteLine($"  Padding applied: H={horizontalPadding:F4}, V={verticalPadding:F4}");
     }
 
     // ========================================================================
@@ -433,28 +443,34 @@ class Program
         // Calculate current frame based on elapsed time
         currentFrame = (int)(frameTime / frameDuration) % totalFrames;
 
-        // Calculate UV offset for current frame in 2x4 layout
+        // Calculate UV offset for current frame in 2x4 layout with spacing
         // 
         // FRAME LAYOUT:
         // Row 0: Frame 0, 1, 2, 3 (columns 0, 1, 2, 3)
         // Row 1: Frame 4, 5, 6, 7 (columns 0, 1, 2, 3)
         //
-        // CALCULATION:
+        // CALCULATION WITH SPACING:
         // row = currentFrame / framesPerRow
         // col = currentFrame % framesPerRow
-        // uOffset = col * frameWidth
-        // vOffset = row * frameHeight
+        // uOffset = col * (frameWidth + horizontalSpacing)
+        // vOffset = row * (frameHeight + verticalSpacing)
         //
-        // EXAMPLES:
+        // EXAMPLES (with spacing = 0.0):
         // Frame 0: row=0, col=0 → uOffset=0.0, vOffset=0.0
         // Frame 1: row=0, col=1 → uOffset=0.25, vOffset=0.0
         // Frame 4: row=1, col=0 → uOffset=0.0, vOffset=0.5
         // Frame 7: row=1, col=3 → uOffset=0.75, vOffset=0.5
+        //
+        // EXAMPLES (with spacing = 0.01):
+        // Frame 0: row=0, col=0 → uOffset=0.0, vOffset=0.0
+        // Frame 1: row=0, col=1 → uOffset=0.26, vOffset=0.0
+        // Frame 4: row=1, col=0 → uOffset=0.0, vOffset=0.51
+        // Frame 7: row=1, col=3 → uOffset=0.78, vOffset=0.51
         int row = currentFrame / framesPerRow;
         int col = currentFrame % framesPerRow;
         
-        float uOffset = col * frameWidth;
-        float vOffset = row * frameHeight;
+        float uOffset = col * (frameWidth + horizontalSpacing);
+        float vOffset = row * (frameHeight + verticalSpacing);
 
         // Send UV offset to vertex shader
         int uvOffsetLoc = gl!.GetUniformLocation(shaderProgram, "uUVOffset");
