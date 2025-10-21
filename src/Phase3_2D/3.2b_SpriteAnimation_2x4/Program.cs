@@ -107,6 +107,14 @@ class Program
     private static float horizontalSpacing = 0.0f;  // Horizontal spacing between frames (0.0 = no spacing)
     private static float verticalSpacing = 0.0f;    // Vertical spacing between frames (0.0 = no spacing)
     
+    // ========================================================================
+    // PADDING PARAMETERS - FOR FUTURE USE
+    // ========================================================================
+    // These control padding around each frame (gap between sprite content and frame boundary)
+    // Currently set to 0 (no padding) but can be adjusted for future sprite sheets
+    private static float horizontalPadding = 0.0f;  // Horizontal padding around each frame (0.0 = no padding)
+    private static float verticalPadding = 0.0f;    // Vertical padding around each frame (0.0 = no padding)
+    
     // Calculated values (updated each frame)
     private static float frameWidth;        // Width of one frame in UV space (1.0 / framesPerRow)
     private static float frameHeight;       // Height of one frame in UV space
@@ -299,6 +307,8 @@ class Program
         Console.WriteLine($"  Frame UV size: {frameWidth:F4} x {frameHeight:F4}");
         Console.WriteLine($"  Horizontal spacing: {horizontalSpacing:F4} (0.0 = no spacing)");
         Console.WriteLine($"  Vertical spacing: {verticalSpacing:F4} (0.0 = no spacing)");
+        Console.WriteLine($"  Horizontal padding: {horizontalPadding:F4} (0.0 = no padding)");
+        Console.WriteLine($"  Vertical padding: {verticalPadding:F4} (0.0 = no padding)");
         
         // ---------------------------------------------------------
         // 9) CALCULATE QUAD UV COORDINATES AUTOMATICALLY

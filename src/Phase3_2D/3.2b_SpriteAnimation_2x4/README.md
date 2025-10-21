@@ -119,6 +119,10 @@ float animationFPS = 12f; // Animation speed (frames per second)
 // 🔮 FUTURE: Spacing parameters for sprite sheets with gaps
 float horizontalSpacing = 0.0f;  // Horizontal spacing between frames (0.0 = no spacing)
 float verticalSpacing = 0.0f;    // Vertical spacing between frames (0.0 = no spacing)
+
+// 🔮 FUTURE: Padding parameters for sprite sheets with frame padding
+float horizontalPadding = 0.0f;  // Horizontal padding around each frame (0.0 = no padding)
+float verticalPadding = 0.0f;    // Vertical padding around each frame (0.0 = no padding)
 ```
 
 ### Frame Calculation (The Math!)
@@ -280,6 +284,56 @@ FragColor = pow(FragColor, vec4(1.2));             // Increase contrast
 ├─────────┼─────────┼─────────┼─────────┤
 │ Frame 4 │ Frame 5 │ Frame 6 │ Frame 7 │  ← Row 1
 └─────────┴─────────┴─────────┴─────────┘
+```
+
+## 📐 Understanding Spacing vs Padding
+
+### Spacing vs Padding - What's the Difference?
+
+**Spacing** = Gaps **between** frames
+**Padding** = Gaps **around** each frame (inside the frame boundary)
+
+### Visual Example:
+
+```
+SPACING (between frames):
+┌─────────┐  GAP  ┌─────────┐  GAP  ┌─────────┐
+│ Frame 0 │       │ Frame 1 │       │ Frame 2 │
+└─────────┘       └─────────┘       └─────────┘
+
+PADDING (around each frame):
+┌─────────────┐
+│    PADDING  │
+│ ┌─────────┐ │
+│ │ Content │ │  ← Actual sprite content
+│ └─────────┘ │
+│    PADDING  │
+└─────────────┘
+```
+
+### When to Use Each:
+
+**Use Spacing when:**
+- Frames are separated by gaps in the sprite sheet
+- You want to skip empty areas between frames
+- Example: `horizontalSpacing = 0.02f` (2% gap between frames)
+
+**Use Padding when:**
+- Each frame has empty space around the actual sprite content
+- You want to crop out the padding to show only the sprite
+- Example: `horizontalPadding = 0.01f` (1% padding around each frame)
+
+### Future Implementation:
+
+When these parameters are implemented, the UV calculation would be:
+```csharp
+// Effective frame size (accounting for padding)
+float effectiveFrameWidth = frameWidth - (2 * horizontalPadding);
+float effectiveFrameHeight = frameHeight - (2 * verticalPadding);
+
+// UV offset calculation (accounting for spacing)
+float uOffset = col * (frameWidth + horizontalSpacing) + horizontalPadding;
+float vOffset = row * (frameHeight + verticalSpacing) + verticalPadding;
 ```
 
 ## 🔍 Common Issues & Solutions
