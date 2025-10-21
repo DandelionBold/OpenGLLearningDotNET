@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3.2_SpriteAnimation", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3.2b_SpriteAnimation_2x4", "src\Phase3_2D\3.2b_SpriteAnimation_2x4\3.2b_SpriteAnimation_2x4.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3.2c_SpriteAnimation_MultiSheet", "src\Phase3_2D\3.2c_SpriteAnimation_MultiSheet\3.2c_SpriteAnimation_MultiSheet.csproj", "{B2C3D4E5-F6A7-8901-BCDE-F23456789ABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F23456789ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F23456789ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F23456789ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F23456789ABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ACC7715-E8DB-4195-B0A6-1ED4CCDEFDBB} = {1EBE3BA5-68AB-46AF-BA6C-ABD4E588AA14}
@@ -109,5 +115,6 @@ Global
 		{0E72FE4D-7050-434F-A132-45990D41FCF3} = {60F04AD2-E3C4-4108-8E5A-876D5FADB728}
 		{6B7AAFB2-770E-44AD-AD68-23BC27A8C7D4} = {60F04AD2-E3C4-4108-8E5A-876D5FADB728}
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890} = {60F04AD2-E3C4-4108-8E5A-876D5FADB728}
+		{B2C3D4E5-F6A7-8901-BCDE-F23456789ABC} = {60F04AD2-E3C4-4108-8E5A-876D5FADB728}
 	EndGlobalSection
 EndGlobal
