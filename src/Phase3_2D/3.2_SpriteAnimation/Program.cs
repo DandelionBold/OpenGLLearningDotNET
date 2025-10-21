@@ -116,10 +116,10 @@ class Program
     private static readonly float[] quadVertices = new float[]
     {
         //   x      y     z     u     v
-        -0.3f,  0.5f, 0.0f,   0.001f, 0.001f,   // top-left (FLIPPED + TINY MARGIN)
-        -0.3f, -0.5f, 0.0f,   0.001f, 0.999f,   // bottom-left (FLIPPED + TINY MARGIN)
-         0.3f, -0.5f, 0.0f,   0.124f, 0.999f,   // bottom-right (0.125-0.001 = 0.124)
-         0.3f,  0.5f, 0.0f,   0.124f, 0.001f    // top-right (0.125-0.001 = 0.124)
+        -0.3f,  0.5f, 0.0f,   0.0f, 0.0f,       // top-left (FLIPPED, FULL FRAME)
+        -0.3f, -0.5f, 0.0f,   0.0f, 1.0f,       // bottom-left (FLIPPED, FULL FRAME)
+         0.3f, -0.5f, 0.0f,   0.125f, 1.0f,     // bottom-right (FULL FRAME WIDTH)
+         0.3f,  0.5f, 0.0f,   0.125f, 0.0f      // top-right (FULL FRAME WIDTH)
     };
 
     // Indices for two triangles
@@ -268,7 +268,7 @@ class Program
         // 8) INITIALIZE ANIMATION PARAMETERS
         // ---------------------------------------------------------
         // Calculate UV dimensions for one frame
-        frameWidth = 1.0f / framesPerRow;  // If 4 frames per row, each frame is 0.25 wide
+        frameWidth = 1.01f / framesPerRow;  // If 4 frames per row, each frame is 0.25 wide
         frameHeight = 1.0f;                 // Assume single row for now (can be extended)
         
         currentFrame = 0;

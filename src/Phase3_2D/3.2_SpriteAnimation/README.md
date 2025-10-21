@@ -270,6 +270,35 @@ FragColor = pow(FragColor, vec4(1.2));             // Increase contrast
 **Cause**: `animationFPS` too high or `totalFrames` wrong
 **Solution**: Lower `animationFPS` or verify `totalFrames` count
 
+### Issue: Sprite Cut-Off or Frame Bleeding ⚠️ CRITICAL!
+**Cause**: Sprite sheet dimensions don't match frame layout math
+**Solution**: **The sprite sheet dimensions MUST exactly match the frame layout!**
+
+**Example Problem:**
+- You have 8 frames, each 100 px wide
+- Expected width: 8 × 100 = **800 px** ✓
+- Actual width: **790 px** ❌ (WRONG!)
+
+**The Math Behind It:**
+```
+Code calculates UV width: 1.0 / 8 = 0.125 (assumes 800 px)
+But actual frame width: 100 / 790 = 0.1266 (different!)
+Result: UV coordinates don't align with frame boundaries = cut-off/bleeding!
+```
+
+**The Fix:**
+Resize your sprite sheet to match the math:
+- 8 frames × 100 px = **800 px total width** ✓
+- 1 row × 201 px = **201 px total height** ✓
+
+**Formula:**
+```
+Total Width = Frames Per Row × Frame Width
+Total Height = Number of Rows × Frame Height
+```
+
+**Pro Tip:** Use image dimensions that are **powers of 2** (256, 512, 1024) or exact multiples of your frame count for perfect alignment!
+
 ## 🎓 Key Concepts Mastered
 
 ✅ **Sprite Sheets** - Multiple frames in one texture  
