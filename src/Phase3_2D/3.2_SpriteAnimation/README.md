@@ -109,6 +109,10 @@ Interpolated UVs create smooth gradients:
 int framesPerRow = 4;     // How many frames per row (like columns in a table)
 int totalFrames = 8;      // Total animation frames (like pages in a flipbook)
 float animationFPS = 10f; // Animation speed (frames per second)
+
+// ✨ NEW: UV coordinates are automatically calculated!
+// frameWidth = 1.0 / framesPerRow (e.g., 8 frames = 0.125 per frame)
+// This ensures UVs always match your sprite sheet layout
 ```
 
 ### Frame Calculation (The Math!)
@@ -323,6 +327,7 @@ Total Height = Number of Rows × Frame Height
 3. **Frame Consistency**: Keep all frames the same size for smooth animation
 4. **Debug with UVs**: Visualize UV coordinates to debug animation issues
 5. **Test Different Speeds**: Experiment with various FPS values for different effects
+6. **✨ Auto-Calculated UVs**: UV coordinates are now calculated automatically based on `framesPerRow` - just change the parameter and the code adapts!
 
 ---
 

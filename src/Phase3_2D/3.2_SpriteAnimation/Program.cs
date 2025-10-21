@@ -108,18 +108,21 @@ class Program
     // GEOMETRY: A QUAD FOR THE SPRITE
     // ========================================================================
     // Base UVs represent ONE frame (frame 0) - not the entire sprite sheet!
-    // Each frame is 1/8th of the sprite sheet width
+    // The UV coordinates are automatically calculated based on framesPerRow
     // The vertex shader will offset these UVs to show other frames
     // 
     // CHARACTER ASPECT RATIO: Assuming character is taller than wide
     // We'll make the quad narrower to match the character's proportions
-    private static readonly float[] quadVertices = new float[]
+    // 
+    // NOTE: UV coordinates will be calculated dynamically in InitializeQuadVertices()
+    // This ensures they always match the frame layout (e.g., 8 frames = 0.125 per frame)
+    private static float[] quadVertices = new float[]
     {
         //   x      y     z     u     v
-        -0.3f,  0.5f, 0.0f,   0.0f, 0.0f,       // top-left (FLIPPED, FULL FRAME)
-        -0.3f, -0.5f, 0.0f,   0.0f, 1.0f,       // bottom-left (FLIPPED, FULL FRAME)
-         0.3f, -0.5f, 0.0f,   0.125f, 1.0f,     // bottom-right (FULL FRAME WIDTH)
-         0.3f,  0.5f, 0.0f,   0.125f, 0.0f      // top-right (FULL FRAME WIDTH)
+        -0.3f,  0.5f, 0.0f,   0.0f, 0.0f,       // top-left (will be calculated)
+        -0.3f, -0.5f, 0.0f,   0.0f, 1.0f,       // bottom-left (will be calculated)
+         0.3f, -0.5f, 0.0f,   0.0f, 1.0f,       // bottom-right (will be calculated)
+         0.3f,  0.5f, 0.0f,   0.0f, 0.0f        // top-right (will be calculated)
     };
 
     // Indices for two triangles
@@ -268,7 +271,12 @@ class Program
         // 8) INITIALIZE ANIMATION PARAMETERS
         // ---------------------------------------------------------
         // Calculate UV dimensions for one frame
-        frameWidth = 1.01f / framesPerRow;  // If 4 frames per row, each frame is 0.25 wide
+        // 
+        // IMPORTANT: frameWidth MUST match the sprite sheet layout!
+        // Example: 8 frames in a row → 1.0 / 8 = 0.125 per frame
+        // If your sprite sheet is 800px wide with 8 frames of 100px each,
+        // the math works out: 100 / 800 = 0.125 ✓
+        frameWidth = 1.0f / framesPerRow;   // Automatically calculate based on frame count
         frameHeight = 1.0f;                 // Assume single row for now (can be extended)
         
         currentFrame = 0;
@@ -278,8 +286,81 @@ class Program
         Console.WriteLine($"  Frames per row: {framesPerRow}");
         Console.WriteLine($"  Total frames: {totalFrames}");
         Console.WriteLine($"  Animation FPS: {animationFPS}");
-        Console.WriteLine($"  Frame UV size: {frameWidth:F2} x {frameHeight:F2}");
+        Console.WriteLine($"  Frame UV size: {frameWidth:F4} x {frameHeight:F2}");
+        
+        // ---------------------------------------------------------
+        // 9) CALCULATE QUAD UV COORDINATES AUTOMATICALLY
+        // ---------------------------------------------------------
+        // This updates quadVertices with the correct UV coordinates
+        // based on frameWidth (e.g., 0.125 for 8 frames)
+        InitializeQuadVertices();
+        
+        // ---------------------------------------------------------
+        // 10) RE-UPLOAD VBO DATA WITH UPDATED UV COORDINATES
+        // ---------------------------------------------------------
+        // Now that we've calculated the correct UVs, we need to update the GPU buffer
+        gl.BindBuffer(BufferTargetARB.ArrayBuffer, vbo);
+        unsafe
+        {
+            fixed (float* buf = quadVertices)
+            {
+                gl.BufferData(BufferTargetARB.ArrayBuffer,
+                    (nuint)(quadVertices.Length * sizeof(float)),
+                    buf,
+                    BufferUsageARB.StaticDraw);
+            }
+        }
+        Console.WriteLine($"  VBO updated with calculated UV coordinates.\n");
+        
         Console.WriteLine($"Setup complete. Starting sprite animation.\n");
+    }
+
+    // ========================================================================
+    // INITIALIZE QUAD VERTICES - CALCULATE UV COORDINATES AUTOMATICALLY
+    // ========================================================================
+    /// <summary>
+    /// Updates the quadVertices array with automatically calculated UV coordinates
+    /// based on the animation parameters (framesPerRow, frameHeight).
+    /// 
+    /// This method MUST be called AFTER frameWidth and frameHeight are calculated!
+    /// 
+    /// HOW IT WORKS:
+    /// - Each frame in the sprite sheet occupies a portion of the texture (0.0 to 1.0)
+    /// - frameWidth = 1.0 / framesPerRow (e.g., 8 frames = 0.125 per frame)
+    /// - frameHeight = 1.0 / numberOfRows (for single row = 1.0)
+    /// 
+    /// QUAD VERTEX LAYOUT (5 floats per vertex: x, y, z, u, v):
+    /// - Vertex 0 (top-left):     Position (-0.3, 0.5, 0.0),  UV (0.0, 0.0)
+    /// - Vertex 1 (bottom-left):  Position (-0.3, -0.5, 0.0), UV (0.0, 1.0)
+    /// - Vertex 2 (bottom-right): Position (0.3, -0.5, 0.0),  UV (frameWidth, 1.0)
+    /// - Vertex 3 (top-right):    Position (0.3, 0.5, 0.0),   UV (frameWidth, 0.0)
+    /// 
+    /// The U coordinate spans from 0.0 to frameWidth (showing exactly ONE frame)
+    /// The V coordinate spans from 0.0 to 1.0 (full height of the sprite)
+    /// </summary>
+    private static void InitializeQuadVertices()
+    {
+        // Each vertex has 5 components: x, y, z, u, v
+        // UV indices: vertex 0 = [3,4], vertex 1 = [8,9], vertex 2 = [13,14], vertex 3 = [18,19]
+        
+        // Top-left vertex (U = 0.0, V = 0.0)
+        quadVertices[3] = 0.0f;        // U coordinate
+        quadVertices[4] = 0.0f;        // V coordinate
+        
+        // Bottom-left vertex (U = 0.0, V = 1.0)
+        quadVertices[8] = 0.0f;        // U coordinate
+        quadVertices[9] = 1.0f;        // V coordinate (full height)
+        
+        // Bottom-right vertex (U = frameWidth, V = 1.0)
+        quadVertices[13] = frameWidth; // U coordinate (end of ONE frame)
+        quadVertices[14] = 1.0f;       // V coordinate (full height)
+        
+        // Top-right vertex (U = frameWidth, V = 0.0)
+        quadVertices[18] = frameWidth; // U coordinate (end of ONE frame)
+        quadVertices[19] = 0.0f;       // V coordinate
+        
+        Console.WriteLine($"  Quad UVs auto-calculated: (0.0, 0.0) to ({frameWidth:F4}, 1.0)");
+        Console.WriteLine($"  This shows exactly ONE frame from the sprite sheet.");
     }
 
     // ========================================================================
