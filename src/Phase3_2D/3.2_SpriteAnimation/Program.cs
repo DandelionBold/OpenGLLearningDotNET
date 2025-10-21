@@ -107,15 +107,19 @@ class Program
     // ========================================================================
     // GEOMETRY: A QUAD FOR THE SPRITE
     // ========================================================================
-    // Same as 3.1, but UVs represent the FIRST frame (frame 0)
+    // Base UVs represent ONE frame (frame 0) - not the entire sprite sheet!
+    // Each frame is 1/8th of the sprite sheet width
     // The vertex shader will offset these UVs to show other frames
+    // 
+    // CHARACTER ASPECT RATIO: Assuming character is taller than wide
+    // We'll make the quad narrower to match the character's proportions
     private static readonly float[] quadVertices = new float[]
     {
         //   x      y     z     u     v
-        -0.5f,  0.5f, 0.0f,   0.0f, 1.0f,   // top-left
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,   // bottom-left
-         0.5f, -0.5f, 0.0f,   1.0f, 0.0f,   // bottom-right
-         0.5f,  0.5f, 0.0f,   1.0f, 1.0f    // top-right
+        -0.3f,  0.5f, 0.0f,   0.001f, 0.001f,   // top-left (FLIPPED + TINY MARGIN)
+        -0.3f, -0.5f, 0.0f,   0.001f, 0.999f,   // bottom-left (FLIPPED + TINY MARGIN)
+         0.3f, -0.5f, 0.0f,   0.124f, 0.999f,   // bottom-right (0.125-0.001 = 0.124)
+         0.3f,  0.5f, 0.0f,   0.124f, 0.001f    // top-right (0.125-0.001 = 0.124)
     };
 
     // Indices for two triangles
