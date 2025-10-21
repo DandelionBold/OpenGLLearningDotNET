@@ -115,6 +115,10 @@ float animationFPS = 12f; // Animation speed (frames per second)
 // frameWidth = 1.0 / framesPerRow = 1.0 / 4 = 0.25
 // frameHeight = 1.0 / numberOfRows = 1.0 / 2 = 0.5
 // This ensures UVs always match your sprite sheet layout
+
+// 🔮 FUTURE: Spacing parameters for sprite sheets with gaps
+float horizontalSpacing = 0.0f;  // Horizontal spacing between frames (0.0 = no spacing)
+float verticalSpacing = 0.0f;    // Vertical spacing between frames (0.0 = no spacing)
 ```
 
 ### Frame Calculation (The Math!)

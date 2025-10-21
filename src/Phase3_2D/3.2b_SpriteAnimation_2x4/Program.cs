@@ -99,6 +99,14 @@ class Program
     private static int totalFrames = 8;      // Total number of animation frames (2×4=8)
     private static float animationFPS = 12f; // Animation speed (frames per second)
     
+    // ========================================================================
+    // SPACING PARAMETERS - FOR FUTURE USE
+    // ========================================================================
+    // These control spacing between frames in the sprite sheet
+    // Currently set to 0 (no spacing) but can be adjusted for future sprite sheets
+    private static float horizontalSpacing = 0.0f;  // Horizontal spacing between frames (0.0 = no spacing)
+    private static float verticalSpacing = 0.0f;    // Vertical spacing between frames (0.0 = no spacing)
+    
     // Calculated values (updated each frame)
     private static float frameWidth;        // Width of one frame in UV space (1.0 / framesPerRow)
     private static float frameHeight;       // Height of one frame in UV space
@@ -289,6 +297,8 @@ class Program
         Console.WriteLine($"  Total frames: {totalFrames}");
         Console.WriteLine($"  Animation FPS: {animationFPS}");
         Console.WriteLine($"  Frame UV size: {frameWidth:F4} x {frameHeight:F4}");
+        Console.WriteLine($"  Horizontal spacing: {horizontalSpacing:F4} (0.0 = no spacing)");
+        Console.WriteLine($"  Vertical spacing: {verticalSpacing:F4} (0.0 = no spacing)");
         
         // ---------------------------------------------------------
         // 9) CALCULATE QUAD UV COORDINATES AUTOMATICALLY
