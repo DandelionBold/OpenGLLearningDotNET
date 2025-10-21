@@ -278,7 +278,33 @@ class Program
         }
 
         // ---------------------------------------------------------
-        // 8) INITIALIZE ANIMATION PARAMETERS FOR FIRST SPRITE SHEET
+        // 8) SET UP ORTHOGRAPHIC PROJECTION MATRIX
+        // ---------------------------------------------------------
+        // Create 2D orthographic projection for pixel-perfect rendering
+        // This maps screen coordinates (-1 to +1) to our desired viewport
+        Matrix4x4 projection = Matrix4x4.CreateOrthographicOffCenter(
+            -1.0f, 1.0f,    // left, right
+            -1.0f, 1.0f,    // bottom, top  
+            -1.0f, 1.0f     // near, far
+        );
+
+        // Send projection matrix to shader
+        int projectionLoc = gl.GetUniformLocation(shaderProgram, "uProjection");
+        if (projectionLoc != -1)
+        {
+            unsafe
+            {
+                float* matrixPtr = stackalloc float[16];
+                matrixPtr[0] = projection.M11; matrixPtr[1] = projection.M12; matrixPtr[2] = projection.M13; matrixPtr[3] = projection.M14;
+                matrixPtr[4] = projection.M21; matrixPtr[5] = projection.M22; matrixPtr[6] = projection.M23; matrixPtr[7] = projection.M24;
+                matrixPtr[8] = projection.M31; matrixPtr[9] = projection.M32; matrixPtr[10] = projection.M33; matrixPtr[11] = projection.M34;
+                matrixPtr[12] = projection.M41; matrixPtr[13] = projection.M42; matrixPtr[14] = projection.M43; matrixPtr[15] = projection.M44;
+                gl.UniformMatrix4(projectionLoc, 1, false, matrixPtr);
+            }
+        }
+
+        // ---------------------------------------------------------
+        // 9) INITIALIZE ANIMATION PARAMETERS FOR FIRST SPRITE SHEET
         // ---------------------------------------------------------
         SwitchSpriteSheet(0);  // Start with sheet 0 (1x8)
 
@@ -377,17 +403,18 @@ class Program
         // Each vertex has 5 components: x, y, z, u, v
         // UV indices: vertex 0 = [3,4], vertex 1 = [8,9], vertex 2 = [13,14], vertex 3 = [18,19]
         
+        // FLIP V COORDINATES to fix sprite orientation (0.0 ↔ 1.0)
         quadVertices[3] = uStart;   // Top-left U
-        quadVertices[4] = vStart;   // Top-left V
+        quadVertices[4] = vEnd;     // Top-left V (FLIPPED: was vStart)
         
         quadVertices[8] = uStart;   // Bottom-left U
-        quadVertices[9] = vEnd;     // Bottom-left V
+        quadVertices[9] = vStart;   // Bottom-left V (FLIPPED: was vEnd)
         
         quadVertices[13] = uEnd;    // Bottom-right U
-        quadVertices[14] = vEnd;    // Bottom-right V
+        quadVertices[14] = vStart;  // Bottom-right V (FLIPPED: was vEnd)
         
         quadVertices[18] = uEnd;    // Top-right U
-        quadVertices[19] = vStart;  // Top-right V
+        quadVertices[19] = vEnd;    // Top-right V (FLIPPED: was vStart)
     }
 
     // ========================================================================
