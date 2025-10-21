@@ -94,17 +94,15 @@ class Program
     // ANIMATION PARAMETERS
     // ========================================================================
     // These control how the sprite sheet is interpreted and animated
-    // Animation parameters - FOR WALKING SPRITE SHEET (2x4 grid)
-    private static int framesPerRow = 4;     // How many frames per row in sprite sheet
-    private static int totalFrames = 8;      // Total number of animation frames (walking cycle)
-    private static float animationFPS = 8f;  // Animation speed (frames per second) - slower for walking
+    private static int framesPerRow = 8;     // How many frames per row in sprite sheet (8 frames in 1 row)
+    private static int totalFrames = 8;      // Total number of animation frames
+    private static float animationFPS = 12f; // Animation speed (frames per second) - faster for running
     
     // Calculated values (updated each frame)
     private static float frameWidth;        // Width of one frame in UV space (1.0 / framesPerRow)
     private static float frameHeight;       // Height of one frame in UV space
     private static int currentFrame;        // Current frame index (0 to totalFrames-1)
     private static float frameTime;         // Time accumulator for frame timing
-    private static int previousFrame = -1;  // Previous frame for change detection
 
     // ========================================================================
     // GEOMETRY: A QUAD FOR THE SPRITE
@@ -326,14 +324,7 @@ class Program
         float frameDuration = 1.0f / animationFPS; // e.g., 0.1 seconds for 10 FPS
 
         // Calculate current frame based on elapsed time
-        float frameIndex = frameTime / frameDuration;
-        currentFrame = (int)frameIndex % totalFrames;
-        
-        // Debug output every second
-        if ((int)frameTime != (int)(frameTime - delta))
-        {
-            Console.WriteLine($"Frame: {currentFrame}, UV Offset: ({uOffset:F2}, {vOffset:F2})");
-        }
+        currentFrame = (int)(frameTime / frameDuration) % totalFrames;
 
         // Calculate UV offset for current frame
         // Frame 0: offset (0, 0)
@@ -350,6 +341,11 @@ class Program
             gl.Uniform2(uvOffsetLoc, uOffset, vOffset);
         }
 
+        // Optional: Print frame info every second (for debugging)
+        if ((int)frameTime != (int)(frameTime - delta))
+        {
+            Console.WriteLine($"Frame: {currentFrame}, UV Offset: ({uOffset:F2}, {vOffset:F2})");
+        }
     }
 
     // ========================================================================

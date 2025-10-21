@@ -76,7 +76,7 @@ void main()
     // the background color.
     //
     // Uncomment the next line to enable transparency:
-    // if (FragColor.a < 0.1) discard;
+    if (FragColor.a < 0.1) discard;
     
     // ========================================================================
     // STEP 3: OPTIONAL DEBUG VISUALIZATION
