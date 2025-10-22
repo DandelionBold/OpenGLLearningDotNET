@@ -37,12 +37,15 @@ test/
 ### Progress
 
 - [x] **Project 3.1**: Textured Quad (baseline and 3.1b preserve-aspect) ✅
-- [ ] **Project 3.2**: Sprite Animation ⏳
+- [x] **Project 3.2**: Sprite Animation (1x8 layout with auto-calculated UVs) ✅
+- [x] **Project 3.2b**: Sprite Animation 2x4 (2 rows × 4 columns with spacing/padding) ✅
+- [x] **Project 3.2c**: Multi-Sheet Animation (enhanced controls with continuous key holding) ✅
 - [ ] **Project 3.3**: Moving Sprites ⏳
 - [ ] **Project 3.4**: Simple 2D Game ⏳
 - [ ] **Project 3.5**: Particle System ⏳
 
-**Phase 1 Status: COMPLETE! 🎉**
+**Phase 1 & 2 Status: COMPLETE! 🎉**  
+**Phase 3 Status: 60% Complete (3/5 projects)**
 
 ---
 
@@ -51,7 +54,12 @@ test/
 ### Run (PowerShell-friendly)
 
 ```bash
+# Phase 3 Projects
 dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
+dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_TexturedQuad_PreserveAspect.csproj
+dotnet run --project src/Phase3_2D/3.2_SpriteAnimation/3.2_SpriteAnimation.csproj
+dotnet run --project src/Phase3_2D/3.2b_SpriteAnimation_2x4/3.2b_SpriteAnimation_2x4.csproj
+dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAnimation_MultiSheet.csproj
 ```
 
 ### Option 2: Using Visual Studio
@@ -71,22 +79,32 @@ dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
 
 ## 📚 What You Have Now
 
-### Project 1.1: Empty Window
+### Phase 3 Projects: 2D Graphics Mastery
 
-This project demonstrates:
+**Project 3.1**: Textured Quad
+- Load and display images using StbImageSharp
+- UV coordinate mapping
+- Orthographic projection for 2D rendering
+- Variant 3.1b preserves image aspect ratio
 
-- Creating a window with Silk.NET
-- Initializing OpenGL context
-- The render loop (Load → Update → Render → Close)
-- Clearing the screen with a color
-- Proper resource cleanup
+**Project 3.2**: Sprite Animation
+- Sprite sheet animation with 1x8 layout
+- Auto-calculated UV coordinates
+- Frame timing and animation control
+- Transparency support
 
-**Features**:
+**Project 3.2b**: Sprite Animation 2x4
+- 2 rows × 4 columns sprite sheet layout
+- Spacing and padding support for sprite sheets with gaps
+- Row/column-based frame calculation
+- Enhanced UV offset system
 
-- 800x600 window
-- Dark blue background
-- Console output showing OpenGL information
-- Full inline documentation explaining every concept
+**Project 3.2c**: Multi-Sheet Animation
+- Multiple sprite sheets (1x8 and 2x4 layouts)
+- Enhanced keyboard controls (Numbers, Space, Arrows)
+- Continuous key holding for smooth control
+- Pause/unpause with manual frame control
+- Direct sprite sheet selection
 
 ### Learning Materials
 
@@ -101,11 +119,28 @@ This project demonstrates:
 
 ## 🎓 What You've Learned So Far
 
+### Phase 1 & 2 Concepts ✅
 1. **The Render Loop**: Every OpenGL app follows Initialize → Update → Render → Cleanup
 2. **OpenGL Context**: The `GL` object is how you talk to your GPU
 3. **Delta Time**: Time between frames, used for smooth animations
 4. **Colors in OpenGL**: RGBA format with values 0.0 to 1.0
 5. **Basic Window Management**: Creating and configuring windows
+6. **Shaders**: Vertex and Fragment shaders (GLSL)
+7. **VBO/VAO**: GPU memory management and vertex format configuration
+8. **Matrix Transformations**: Rotation, scaling, translation
+9. **Element Buffer Objects**: Index buffers for efficient rendering
+
+### Phase 3 Concepts ✅ (Partially)
+10. **Texture Loading**: StbImageSharp, image file formats
+11. **UV Coordinates**: Texture mapping and sampling
+12. **Orthographic Projection**: 2D camera setup
+13. **Sprite Sheets**: Multi-frame textures
+14. **UV Offset Animation**: Frame-based animation
+15. **Transparency**: Alpha channel, discard in shaders
+16. **Keyboard Input**: Event-driven and continuous input
+17. **Animation Timing**: FPS control, delta time
+18. **Multi-texture Management**: Switching between sprite sheets
+19. **Continuous Key Holding**: Key repeat rate control
 
 ---
 
@@ -113,19 +148,15 @@ This project demonstrates:
 
 ### Immediate
 
-Try running the project and experimenting:
+**NEXT**: Project 3.3 - Moving Sprites
+- Keyboard-controlled sprite movement
+- Collision detection basics
+- Multiple sprites on screen
 
-1. Change the window size
-2. Change the background color
-3. Uncomment the FPS counter
+### Upcoming Projects
 
-### Next Project: 1.2 - Changing Colors
-
-We'll create animated, time-based color changes to learn:
-
-- Using deltaTime for animations
-- Color interpolation
-- Math for smooth transitions
+- **3.4**: Simple 2D Game (Pong or Breakout clone)
+- **3.5**: Particle System (visual effects)
 
 ---
 
@@ -145,12 +176,12 @@ We'll create animated, time-based color changes to learn:
 | ------------------------ | -------------- | ------------------ |
 | Phase 1: Foundation      | ✅ Complete    | 3/3                |
 | Phase 2: First Triangle  | ✅ Complete    | 4/4                |
-| Phase 3: 2D Graphics     | 🟡 Next Up     | 0/5                |
+| Phase 3: 2D Graphics     | 🟡 In Progress  | 3/5                |
 | Phase 4: 3D Introduction | ⚪ Not Started | 0/6                |
 | Phase 5: Advanced Topics | ⚪ Not Started | 0/5                |
 | Phase 6: Final Project   | ⚪ Not Started | 0/1                |
 
-**Total Progress**: 7/24 projects (29%)
+**Total Progress**: 11/24 projects (46%)
 
 ---
 
@@ -164,5 +195,5 @@ We'll create animated, time-based color changes to learn:
 
 ---
 
-**Last Updated**: Just now
-**Next Milestone**: Complete Projects 1.2 and 1.3
+**Last Updated**: December 20, 2024
+**Next Milestone**: Complete Project 3.3 - Moving Sprites

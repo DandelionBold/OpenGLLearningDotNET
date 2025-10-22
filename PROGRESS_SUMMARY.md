@@ -1,11 +1,11 @@
 # OpenGL Learning Journey - Progress Summary
 
-**Last Updated**: October 20, 2025  
+**Last Updated**: December 20, 2024  
 **Repository**: https://github.com/DandelionBold/OpenGLLearningDotNET.git
 
 ---
 
-## 🎉 Overall Progress: 8/24 Projects (33%)
+## 🎉 Overall Progress: 11/24 Projects (46%)
 
 ---
 
@@ -90,13 +90,16 @@
 
 ## 🟡 Phase 3: 2D Graphics Mastery - **IN PROGRESS**
 
-**Status**: 🟡 20% Complete (1/5 projects)  
+**Status**: 🟡 60% Complete (3/5 projects)  
 **Projects**: Textures, Sprites, Animations, 2D Game, Particle System
 
 ### Projects Completed
 
 - ✅ Project 3.1: Textured Quad — load image, UVs, sampling, ortho projection
   - Variant 3.1b preserves image aspect via model scale (width/height)
+- ✅ Project 3.2: Sprite Animation — sprite sheets, UV offset animation, frame timing
+  - Variant 3.2b: 2x4 sprite sheet layout with spacing/padding support
+  - Variant 3.2c: Multi-sheet animation with enhanced keyboard controls and continuous key holding
 
 ---
 
@@ -158,7 +161,7 @@
 10. ✅ Input polling
 11. ✅ Keyboard and mouse integration
 
-### Phase 2 Concepts ✅ (Partially)
+### Phase 2 Concepts ✅
 
 1. ✅ **Vertex Buffer Objects (VBO)** - GPU memory management
 2. ✅ **Vertex Array Objects (VAO)** - Vertex format configuration
@@ -169,9 +172,22 @@
 7. ✅ **Fragment Shader** - Per-pixel coloring
 8. ✅ **Buffer management** - Creating, binding, uploading data
 9. ✅ **Vertex attributes** - Describing vertex data format
-10. ⏳ Vertex colors and interpolation (in progress)
-11. ⏳ Matrix transformations (upcoming)
-12. ⏳ Element buffer objects (upcoming)
+10. ✅ **Vertex colors and interpolation** - Gradient effects
+11. ✅ **Matrix transformations** - Rotation, scaling, translation
+12. ✅ **Element buffer objects** - Index buffers for vertex reuse
+
+### Phase 3 Concepts ✅ (Partially)
+
+1. ✅ **Texture Loading** - StbImageSharp, image file formats
+2. ✅ **UV Coordinates** - Texture mapping, sampling
+3. ✅ **Orthographic Projection** - 2D camera setup
+4. ✅ **Sprite Sheets** - Multi-frame textures
+5. ✅ **UV Offset Animation** - Frame-based animation
+6. ✅ **Transparency** - Alpha channel, discard in shaders
+7. ✅ **Keyboard Input** - Event-driven and continuous input
+8. ✅ **Animation Timing** - FPS control, delta time
+9. ✅ **Multi-texture Management** - Switching between sprite sheets
+10. ✅ **Continuous Key Holding** - Key repeat rate control
 
 ---
 
@@ -179,11 +195,11 @@
 
 ### Files Created
 
-- **C# Source Files**: 7
-- **Shader Files**: 2 (GLSL)
-- **Project Files**: 5 (.csproj)
-- **Documentation**: 3 markdown files
-- **Total Lines of Code**: ~2,000+ (including comments)
+- **C# Source Files**: 12
+- **Shader Files**: 6 (GLSL)
+- **Project Files**: 11 (.csproj)
+- **Documentation**: 8 markdown files
+- **Total Lines of Code**: ~4,500+ (including comments)
 
 ### Build Status
 
@@ -203,15 +219,14 @@ OpenGLLearning/
 ├── PROGRESS_SUMMARY.md (this file)
 ├── .gitignore
 └── src/
-    ├── Phase1_Foundation/
-    │   ├── README.md
-    │   ├── 1.1_EmptyWindow/ ✅
-    │   ├── 1.2_ChangingColors/ ✅
-    │   └── 1.3_InputHandling/ ✅
+    ├── Phase1_Foundation/ (all complete)
     ├── Phase2_FirstTriangle/ (all complete)
     └── Phase3_2D/
         ├── 3.1_TexturedQuad/ ✅
-        └── 3.1b_TexturedQuad_PreserveAspect/ ✅
+        ├── 3.1b_TexturedQuad_PreserveAspect/ ✅
+        ├── 3.2_SpriteAnimation/ ✅
+        ├── 3.2b_SpriteAnimation_2x4/ ✅
+        └── 3.2c_SpriteAnimation_MultiSheet/ ✅
 ```
 
 ---
@@ -221,8 +236,12 @@ OpenGLLearning/
 ### Preferred (PowerShell-friendly)
 
 ```
+# Phase 3 Projects
 dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
 dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_TexturedQuad_PreserveAspect.csproj
+dotnet run --project src/Phase3_2D/3.2_SpriteAnimation/3.2_SpriteAnimation.csproj
+dotnet run --project src/Phase3_2D/3.2b_SpriteAnimation_2x4/3.2b_SpriteAnimation_2x4.csproj
+dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAnimation_MultiSheet.csproj
 ```
 
 ### Phase 1 Projects
@@ -234,6 +253,9 @@ dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_Texture
 ### Phase 3 Projects
 
 - **3.1**: Textured Quad (baseline + preserve-aspect variant)
+- **3.2**: Sprite Animation (1x8 layout with auto-calculated UVs)
+- **3.2b**: Sprite Animation 2x4 (2 rows × 4 columns with spacing/padding support)
+- **3.2c**: Multi-Sheet Animation (enhanced controls with continuous key holding)
 
 ---
 
@@ -241,13 +263,14 @@ dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_Texture
 
 ### Immediate Tasks
 
-1. ✅ Complete Project 2.1 - Done!
-2. ⏳ **NOW**: Implement Project 2.2 - Multi-Color Triangle
-   - Add color attribute to vertices
-   - Update shaders to pass colors
-   - See gradient effect
-3. ⏳ Implement Project 2.3 - Rotating Triangle
-4. ⏳ Implement Project 2.4 - Multiple Shapes
+1. ✅ Complete Phase 2 - All projects done!
+2. ✅ Complete Phase 3 Projects 3.1, 3.2, 3.2b, 3.2c - All done!
+3. ⏳ **NEXT**: Implement Project 3.3 - Moving Sprites
+   - Keyboard-controlled sprite movement
+   - Collision detection basics
+   - Multiple sprites on screen
+4. ⏳ Implement Project 3.4 - Simple 2D Game
+5. ⏳ Implement Project 3.5 - Particle System
 
 ### Upcoming Phases
 
@@ -267,9 +290,12 @@ dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_Texture
 - [x] ✅ **Drew first triangle!** 🎉 **MAJOR MILESTONE!**
 - [x] ✅ **Wrote first shaders**
 - [x] ✅ **Understood VBO/VAO architecture**
-- [ ] ⏳ Create gradient colors
-- [ ] ⏳ Implement transformations
-- [ ] ⏳ Work with textures
+- [x] ✅ **Created gradient colors**
+- [x] ✅ **Implemented transformations**
+- [x] ✅ **Worked with textures**
+- [x] ✅ **Built sprite animations**
+- [x] ✅ **Implemented multi-sheet animation**
+- [x] ✅ **Added continuous key holding**
 - [ ] ⏳ Build 3D scenes
 - [ ] ⏳ Implement lighting
 - [ ] ⏳ Create final project

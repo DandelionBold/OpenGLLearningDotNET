@@ -51,7 +51,9 @@ This course is divided into 6 phases, taking you from complete beginner to confi
 ### Phase 3: 2D Graphics Mastery (Week 3-5 - 15-20 hours) 🟡 IN PROGRESS
 
 - ✅ **3.1**: Textured Quad - Load and display images (with aspect-preserving variant 3.1b)
-- ⏳ **3.2**: Sprite Animation - Sprite sheets
+- ✅ **3.2**: Sprite Animation - Sprite sheets with auto-calculated UVs
+- ✅ **3.2b**: Sprite Animation 2x4 - 2 rows × 4 columns with spacing/padding support
+- ✅ **3.2c**: Multi-Sheet Animation - Enhanced controls with continuous key holding
 - ⏳ **3.3**: Moving Sprites - Keyboard control
 - ⏳ **3.4**: Simple 2D Game - Pong or Breakout!
 - ⏳ **3.5**: Particle System - Effects
@@ -225,15 +227,16 @@ Happy coding! 🚀✨
 
 ---
 
-**Current Status**: Phase 3 IN PROGRESS — 3.1 complete ✅  
+**Current Status**: Phase 3 IN PROGRESS — 3.1, 3.2, 3.2b, 3.2c complete ✅  
 Run examples (PowerShell):
 
 ```
-# Baseline 3.1
+# Phase 3 Projects
 dotnet run --project src/Phase3_2D/3.1_TexturedQuad/3.1_TexturedQuad.csproj
-
-# Aspect-preserving variant
 dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_TexturedQuad_PreserveAspect.csproj
+dotnet run --project src/Phase3_2D/3.2_SpriteAnimation/3.2_SpriteAnimation.csproj
+dotnet run --project src/Phase3_2D/3.2b_SpriteAnimation_2x4/3.2b_SpriteAnimation_2x4.csproj
+dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAnimation_MultiSheet.csproj
 ```
 
 Note: PowerShell doesn't support '&&'. Run commands separately or use `dotnet run --project` as shown.
