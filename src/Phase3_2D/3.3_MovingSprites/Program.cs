@@ -355,14 +355,28 @@ class Program
             if (overlapX < overlapY)
             {
                 float dir = MathF.Sign(delta.X);
-                a.position.X -= overlapX * dir;
+                // Separate both a (player) and b (enemy) slightly for better response
+                float sepPlayer = overlapX * 0.7f;
+                float sepEnemy = overlapX * 0.3f;
+                a.position.X -= sepPlayer * dir;
+                b.position.X += sepEnemy * dir;
                 a.velocity.X = 0f;
+                // Enemy reacts: reverse direction when colliding horizontally with player
+                if (!b.isPlayer)
+                {
+                    b.velocity.X = -b.velocity.X;
+                    b.facingRight = b.velocity.X >= 0f;
+                }
             }
             else
             {
                 float dir = MathF.Sign(delta.Y);
-                a.position.Y -= overlapY * dir;
+                float sepPlayer = overlapY * 0.7f;
+                float sepEnemy = overlapY * 0.3f;
+                a.position.Y -= sepPlayer * dir;
+                b.position.Y += sepEnemy * dir;
                 a.velocity.Y = 0f;
+                // If player hits enemy from above, set grounded
                 if (dir > 0f) a.isGrounded = true; // player on top of enemy
             }
         }
