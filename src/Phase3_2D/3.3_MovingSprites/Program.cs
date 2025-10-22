@@ -168,7 +168,8 @@ class Program
         for (int i = 0; i < enemies.Length; i++)
         {
             float x = -0.3f + i * 0.35f;
-            enemies[i] = new Sprite
+            // Base enemy sprite
+            var e = new Sprite
             {
                 position = new Vector2(x, groundY + 0.22f),
                 velocity = new Vector2((i % 2 == 0 ? enemySpeed : -enemySpeed), 0f),
@@ -185,10 +186,25 @@ class Program
                 texture = texEnemy,
                 isPlayer = false,
                 isGrounded = true,
-                patrolMinX = x - 0.3f,  // Increased patrol range
-                patrolMaxX = x + 0.3f,  // Increased patrol range
                 moveSpeed = enemySpeed
             };
+
+            // Patrol bounds that keep the whole sprite on-screen
+            float halfX = e.size.X * 0.5f;
+            float minEdge = -1f + halfX;
+            float maxEdge =  1f - halfX;
+            float baseRange = 0.30f;
+            e.patrolMinX = MathF.Max(x - baseRange, minEdge);
+            e.patrolMaxX = MathF.Min(x + baseRange, maxEdge);
+            // Ensure there is at least a small range to move
+            if (e.patrolMaxX - e.patrolMinX < 0.05f)
+            {
+                float mid = MathF.Min(MathF.Max(x, minEdge), maxEdge);
+                e.patrolMinX = MathF.Max(mid - 0.05f, minEdge);
+                e.patrolMaxX = MathF.Min(mid + 0.05f, maxEdge);
+            }
+
+            enemies[i] = e;
         }
 
         lastTime = window!.Time;
