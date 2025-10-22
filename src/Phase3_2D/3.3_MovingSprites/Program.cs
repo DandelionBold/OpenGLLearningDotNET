@@ -94,10 +94,10 @@ class Program
         float[] quad = new float[]
         {
             //   x      y     z     u     v
-            -0.5f,  0.5f, 0f,    0f, 1f,
-            -0.5f, -0.5f, 0f,    0f, 0f,
-             0.5f, -0.5f, 0f,    1f, 0f,
-             0.5f,  0.5f, 0f,    1f, 1f,
+            -0.5f,  0.5f, 0f,    0f, 0f,   // top-left: V flipped to 0
+            -0.5f, -0.5f, 0f,    0f, 1f,   // bottom-left: V flipped to 1
+             0.5f, -0.5f, 0f,    1f, 1f,   // bottom-right
+             0.5f,  0.5f, 0f,    1f, 0f,   // top-right
         };
         uint[] indices = { 0, 1, 2, 0, 2, 3 };
 
