@@ -185,8 +185,8 @@ class Program
                 texture = texEnemy,
                 isPlayer = false,
                 isGrounded = true,
-                patrolMinX = x - 0.25f,
-                patrolMaxX = x + 0.25f,
+                patrolMinX = x - 0.3f,  // Increased patrol range
+                patrolMaxX = x + 0.3f,  // Increased patrol range
                 moveSpeed = enemySpeed
             };
         }
