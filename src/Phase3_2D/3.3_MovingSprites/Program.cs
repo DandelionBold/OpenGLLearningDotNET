@@ -69,7 +69,7 @@ class Program
     {
         var opts = WindowOptions.Default;
         opts.Title = "3.3: Moving Sprites";
-        opts.Size = new Vector2D<int>(960, 720);
+        opts.Size = new Vector2D<int>(1280, 720);
         window = Window.Create(opts);
         window.Load += OnLoad;
         window.Update += OnUpdate;
@@ -256,7 +256,7 @@ class Program
                 e.velocity.X = -MathF.Abs(e.moveSpeed);
                 e.facingRight = false;
             }
-            ClampToScreen(ref e);
+            // Don't clamp enemies to screen - let them patrol freely
             enemies[i] = e;
         }
 
