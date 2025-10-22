@@ -61,21 +61,22 @@ UV Dimensions:
 | **1** | Choose Sheet 1 | Switch to 1x8 sprite sheet layout |
 | **2** | Choose Sheet 2 | Switch to 2x4 sprite sheet layout |
 | **SPACE** | Pause/Unpause | Toggle animation pause state |
-| **← (Left Arrow)** | Previous Frame | Step back one frame (only when paused) |
-| **→ (Right Arrow)** | Next Frame | Step forward one frame (only when paused) |
-| **↑ (Arrow Up)** | Increase Speed | Increase animation FPS (+1 per press) |
-| **↓ (Arrow Down)** | Decrease Speed | Decrease animation FPS (-1 per press) |
+| **← (Left Arrow)** | Previous Frame | Step back one frame (hold for continuous) |
+| **→ (Right Arrow)** | Next Frame | Step forward one frame (hold for continuous) |
+| **↑ (Arrow Up)** | Increase Speed | Increase animation FPS (hold for continuous) |
+| **↓ (Arrow Down)** | Decrease Speed | Decrease animation FPS (hold for continuous) |
 | **ESC** | Exit | Close the application |
 
 ### Control Details
 - **Number Keys**: Direct sprite sheet selection (no cycling needed)
 - **Manual Frame Control**: Left/Right arrows only work when animation is paused
+- **Continuous Key Holding**: Arrow keys repeat at 0.1 second intervals when held down
 - **Pause State**: SPACE toggles between running and paused
 - **Speed Control**: 
   - **Minimum FPS**: 1.0 (very slow)
   - **Maximum FPS**: 30.0 (very fast)
   - **Default FPS**: 12.0
-  - **Step**: 1.0 FPS per key press
+  - **Step**: 1.0 FPS per key press/repeat
 
 ---
 

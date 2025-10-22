@@ -77,6 +77,7 @@ class Program
     private static IWindow? window;  // Silk.NET window
     private static GL? gl;           // OpenGL context
     private static IInputContext? inputContext;  // Input system
+    private static IKeyboard? keyboard;  // Keyboard for continuous key checking
 
     // ========================================================================
     // GPU OBJECT HANDLES
@@ -121,6 +122,14 @@ class Program
     private static float maxFPS = 30f;        // Maximum FPS
     private static float fpsStep = 1f;        // FPS change per key press
     private static bool isPaused = false;     // Pause state (controlled by SPACE)
+    
+    // ========================================================================
+    // CONTINUOUS KEY STATE CONTROL
+    // ========================================================================
+    private static float keyRepeatDelay = 0.5f;    // Initial delay before key repeat (seconds)
+    private static float keyRepeatRate = 0.1f;     // Rate of key repeat (seconds between repeats)
+    private static float keyRepeatTimer = 0f;      // Timer for key repeat
+    private static bool keyRepeatActive = false;   // Whether key repeat is active
     
     // ========================================================================
     // SPACING AND PADDING PARAMETERS
@@ -171,9 +180,9 @@ class Program
         Console.WriteLine("CONTROLS:");
         Console.WriteLine("  1, 2: Choose sprite sheet (1x8 or 2x4)");
         Console.WriteLine("  SPACE: Pause/Unpause animation");
-        Console.WriteLine("  LEFT/RIGHT: Manual frame control");
-        Console.WriteLine("  ARROW UP: Increase animation speed");
-        Console.WriteLine("  ARROW DOWN: Decrease animation speed");
+        Console.WriteLine("  LEFT/RIGHT: Manual frame control (hold for continuous)");
+        Console.WriteLine("  ARROW UP: Increase animation speed (hold for continuous)");
+        Console.WriteLine("  ARROW DOWN: Decrease animation speed (hold for continuous)");
         Console.WriteLine("  ESC: Exit");
         Console.WriteLine();
 
@@ -207,9 +216,10 @@ class Program
         // 1) SET UP KEYBOARD INPUT
         // ---------------------------------------------------------
         inputContext = window.CreateInput();
-        foreach (var keyboard in inputContext.Keyboards)
+        foreach (var kb in inputContext.Keyboards)
         {
-            keyboard.KeyDown += OnKeyDown;
+            kb.KeyDown += OnKeyDown;
+            keyboard = kb;  // Store reference for continuous key checking
         }
         Console.WriteLine("Keyboard input registered.");
 
@@ -451,6 +461,9 @@ class Program
         // Clear screen
         gl!.Clear(ClearBufferMask.ColorBufferBit);
 
+        // Check for continuous key states (arrow keys)
+        CheckContinuousKeys(delta);
+
         // Update animation
         UpdateAnimation(delta);
 
@@ -461,6 +474,73 @@ class Program
         // Draw the quad
         gl.BindVertexArray(vao);
         gl.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, (void*)0);
+    }
+
+    // ========================================================================
+    // CHECK CONTINUOUS KEYS - HANDLE HELD DOWN ARROW KEYS
+    // ========================================================================
+    private static void CheckContinuousKeys(double delta)
+    {
+        if (keyboard == null) return;
+
+        // Check if any arrow key is currently pressed
+        bool upPressed = keyboard.IsKeyPressed(Key.Up);
+        bool downPressed = keyboard.IsKeyPressed(Key.Down);
+        bool leftPressed = keyboard.IsKeyPressed(Key.Left);
+        bool rightPressed = keyboard.IsKeyPressed(Key.Right);
+
+        // If any arrow key is pressed, handle key repeat
+        if (upPressed || downPressed || leftPressed || rightPressed)
+        {
+            keyRepeatTimer += (float)delta;
+
+            // Check if we should trigger a key repeat
+            bool shouldRepeat = false;
+            if (!keyRepeatActive)
+            {
+                // First press - trigger immediately
+                shouldRepeat = true;
+                keyRepeatActive = true;
+                keyRepeatTimer = 0f;
+            }
+            else if (keyRepeatTimer >= keyRepeatRate)
+            {
+                // Subsequent repeats
+                shouldRepeat = true;
+                keyRepeatTimer = 0f;
+            }
+
+            if (shouldRepeat)
+            {
+                // Handle the key actions
+                if (upPressed)
+                {
+                    animationFPS = Math.Min(animationFPS + fpsStep, maxFPS);
+                    Console.WriteLine($"Animation FPS: {animationFPS:F1} (Speed UP - HELD)");
+                }
+                if (downPressed)
+                {
+                    animationFPS = Math.Max(animationFPS - fpsStep, minFPS);
+                    Console.WriteLine($"Animation FPS: {animationFPS:F1} (Speed DOWN - HELD)");
+                }
+                if (leftPressed && isPaused)
+                {
+                    currentFrame = (currentFrame - 1 + totalFrames) % totalFrames;
+                    Console.WriteLine($"Manual frame: {currentFrame} (LEFT - HELD)");
+                }
+                if (rightPressed && isPaused)
+                {
+                    currentFrame = (currentFrame + 1) % totalFrames;
+                    Console.WriteLine($"Manual frame: {currentFrame} (RIGHT - HELD)");
+                }
+            }
+        }
+        else
+        {
+            // No keys pressed - reset repeat state
+            keyRepeatActive = false;
+            keyRepeatTimer = 0f;
+        }
     }
 
     // ========================================================================
