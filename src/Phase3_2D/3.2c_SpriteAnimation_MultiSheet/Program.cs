@@ -120,6 +120,7 @@ class Program
     private static float minFPS = 1f;         // Minimum FPS
     private static float maxFPS = 30f;        // Maximum FPS
     private static float fpsStep = 1f;        // FPS change per key press
+    private static bool isPaused = false;     // Pause state (controlled by SPACE)
     
     // ========================================================================
     // SPACING AND PADDING PARAMETERS
@@ -168,7 +169,9 @@ class Program
         Console.WriteLine("====================================");
         Console.WriteLine();
         Console.WriteLine("CONTROLS:");
-        Console.WriteLine("  SPACE: Switch sprite sheets (1x8 ↔ 2x4)");
+        Console.WriteLine("  1, 2: Choose sprite sheet (1x8 or 2x4)");
+        Console.WriteLine("  SPACE: Pause/Unpause animation");
+        Console.WriteLine("  LEFT/RIGHT: Manual frame control");
         Console.WriteLine("  ARROW UP: Increase animation speed");
         Console.WriteLine("  ARROW DOWN: Decrease animation speed");
         Console.WriteLine("  ESC: Exit");
@@ -318,11 +321,33 @@ class Program
     // ========================================================================
     private static void OnKeyDown(IKeyboard keyboard, Key key, int keyCode)
     {
-        // SPACE: Switch sprite sheets
-        if (key == Key.Space)
+        // Number keys: Choose sprite sheet directly
+        if (key == Key.Number1)
         {
-            int nextIndex = (currentSheetIndex + 1) % textureFiles.Length;
-            SwitchSpriteSheet(nextIndex);
+            SwitchSpriteSheet(0);  // Switch to 1x8 sprite sheet
+        }
+        else if (key == Key.Number2)
+        {
+            SwitchSpriteSheet(1);  // Switch to 2x4 sprite sheet
+        }
+        
+        // SPACE: Pause/Unpause animation
+        else if (key == Key.Space)
+        {
+            isPaused = !isPaused;
+            Console.WriteLine($"Animation {(isPaused ? "PAUSED" : "RESUMED")}");
+        }
+        
+        // LEFT/RIGHT: Manual frame control (only when paused)
+        else if (key == Key.Left && isPaused)
+        {
+            currentFrame = (currentFrame - 1 + totalFrames) % totalFrames;
+            Console.WriteLine($"Manual frame: {currentFrame}");
+        }
+        else if (key == Key.Right && isPaused)
+        {
+            currentFrame = (currentFrame + 1) % totalFrames;
+            Console.WriteLine($"Manual frame: {currentFrame}");
         }
         
         // ARROW UP: Increase FPS
@@ -385,6 +410,7 @@ class Program
         Console.WriteLine($"  Layout: {framesPerRow} columns × {numberOfRows} rows = {totalFrames} frames");
         Console.WriteLine($"  Frame size: {frameWidth:F4} × {frameHeight:F4}");
         Console.WriteLine($"  Animation FPS: {animationFPS:F1}");
+        Console.WriteLine($"  Status: {(isPaused ? "PAUSED" : "RUNNING")}");
         Console.WriteLine($"══════════════════════════════════════");
     }
 
@@ -442,16 +468,20 @@ class Program
     // ========================================================================
     private static void UpdateAnimation(double delta)
     {
-        // Accumulate time
-        frameTime += (float)delta;
+        // Only update animation if not paused
+        if (!isPaused)
+        {
+            // Accumulate time
+            frameTime += (float)delta;
 
-        // Calculate frame duration
-        float frameDuration = 1.0f / animationFPS;
+            // Calculate frame duration
+            float frameDuration = 1.0f / animationFPS;
 
-        // Calculate current frame
-        currentFrame = (int)(frameTime / frameDuration) % totalFrames;
+            // Calculate current frame
+            currentFrame = (int)(frameTime / frameDuration) % totalFrames;
+        }
 
-        // Calculate UV offset with spacing
+        // Calculate UV offset with spacing (always update UVs, even when paused)
         int row = currentFrame / framesPerRow;
         int col = currentFrame % framesPerRow;
         

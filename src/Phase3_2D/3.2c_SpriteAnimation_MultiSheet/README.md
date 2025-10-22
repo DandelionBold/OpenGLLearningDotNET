@@ -58,16 +58,24 @@ UV Dimensions:
 
 | Key | Action | Description |
 |-----|--------|-------------|
-| **SPACE** | Switch Sprite Sheet | Toggle between 1x8 and 2x4 layouts |
+| **1** | Choose Sheet 1 | Switch to 1x8 sprite sheet layout |
+| **2** | Choose Sheet 2 | Switch to 2x4 sprite sheet layout |
+| **SPACE** | Pause/Unpause | Toggle animation pause state |
+| **← (Left Arrow)** | Previous Frame | Step back one frame (only when paused) |
+| **→ (Right Arrow)** | Next Frame | Step forward one frame (only when paused) |
 | **↑ (Arrow Up)** | Increase Speed | Increase animation FPS (+1 per press) |
 | **↓ (Arrow Down)** | Decrease Speed | Decrease animation FPS (-1 per press) |
 | **ESC** | Exit | Close the application |
 
-### Speed Control
-- **Minimum FPS**: 1.0 (very slow)
-- **Maximum FPS**: 30.0 (very fast)
-- **Default FPS**: 12.0
-- **Step**: 1.0 FPS per key press
+### Control Details
+- **Number Keys**: Direct sprite sheet selection (no cycling needed)
+- **Manual Frame Control**: Left/Right arrows only work when animation is paused
+- **Pause State**: SPACE toggles between running and paused
+- **Speed Control**: 
+  - **Minimum FPS**: 1.0 (very slow)
+  - **Maximum FPS**: 30.0 (very fast)
+  - **Default FPS**: 12.0
+  - **Step**: 1.0 FPS per key press
 
 ---
 
@@ -237,15 +245,23 @@ Calculate initial frame dimensions
 7. Draw quad with animated UVs
 ```
 
-### On SPACE Press: Switch Sprite Sheet
+### On Number Key Press: Direct Sprite Sheet Selection
 ```
-1. Increment currentSheetIndex (wrap around)
-2. Load new layout parameters (framesPerRow, numberOfRows, totalFrames)
-3. Recalculate frameWidth, frameHeight
-4. Reset animation (currentFrame=0, frameTime=0)
-5. Update quad UVs with InitializeQuadVertices()
-6. Re-upload VBO data to GPU
-7. Next frame uses new texture and parameters
+1: SwitchSpriteSheet(0) → 1x8 layout
+2: SwitchSpriteSheet(1) → 2x4 layout
+```
+
+### On SPACE Press: Pause/Unpause
+```
+isPaused = !isPaused
+Console: "Animation PAUSED" or "Animation RESUMED"
+```
+
+### On LEFT/RIGHT Press: Manual Frame Control (Paused Only)
+```
+LEFT:  currentFrame = (currentFrame - 1 + totalFrames) % totalFrames
+RIGHT: currentFrame = (currentFrame + 1) % totalFrames
+Console: "Manual frame: X"
 ```
 
 ### On ARROW UP/DOWN Press: Adjust Speed
