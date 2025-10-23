@@ -5,7 +5,7 @@
 
 ---
 
-## 🎉 Overall Progress: 11/24 Projects (46%)
+## 🎉 Overall Progress: 12/24 Projects (50%)
 
 ---
 
@@ -90,7 +90,7 @@
 
 ## 🟡 Phase 3: 2D Graphics Mastery - **IN PROGRESS**
 
-**Status**: 🟡 60% Complete (3/5 projects)  
+**Status**: 🟡 80% Complete (4/5 projects)  
 **Projects**: Textures, Sprites, Animations, 2D Game, Particle System
 
 ### Projects Completed
@@ -100,6 +100,7 @@
 - ✅ Project 3.2: Sprite Animation — sprite sheets, UV offset animation, frame timing
   - Variant 3.2b: 2x4 sprite sheet layout with spacing/padding support
   - Variant 3.2c: Multi-sheet animation with enhanced keyboard controls and continuous key holding
+- ✅ Project 3.3: Moving Sprites — player + multiple enemies, WASD/arrow controls, jump, gravity, patrol AI, AABB collisions, facing flip, move/idle animations
 
 ---
 
@@ -188,6 +189,12 @@
 8. ✅ **Animation Timing** - FPS control, delta time
 9. ✅ **Multi-texture Management** - Switching between sprite sheets
 10. ✅ **Continuous Key Holding** - Key repeat rate control
+11. ✅ **Sprite Movement** - Player controls with WASD/arrows
+12. ✅ **Physics Simulation** - Gravity, jump, ground collision
+13. ✅ **AI Behavior** - Enemy patrol patterns
+14. ✅ **Collision Detection** - AABB collision resolution
+15. ✅ **Sprite Facing** - Horizontal flip based on movement direction
+16. ✅ **Animation States** - Move vs idle animation logic
 
 ---
 
@@ -195,11 +202,11 @@
 
 ### Files Created
 
-- **C# Source Files**: 12
-- **Shader Files**: 6 (GLSL)
-- **Project Files**: 11 (.csproj)
-- **Documentation**: 8 markdown files
-- **Total Lines of Code**: ~4,500+ (including comments)
+- **C# Source Files**: 13
+- **Shader Files**: 8 (GLSL)
+- **Project Files**: 12 (.csproj)
+- **Documentation**: 9 markdown files
+- **Total Lines of Code**: ~5,500+ (including comments)
 
 ### Build Status
 
@@ -226,7 +233,8 @@ OpenGLLearning/
         ├── 3.1b_TexturedQuad_PreserveAspect/ ✅
         ├── 3.2_SpriteAnimation/ ✅
         ├── 3.2b_SpriteAnimation_2x4/ ✅
-        └── 3.2c_SpriteAnimation_MultiSheet/ ✅
+        ├── 3.2c_SpriteAnimation_MultiSheet/ ✅
+        └── 3.3_MovingSprites/ ✅
 ```
 
 ---
@@ -242,6 +250,7 @@ dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_Texture
 dotnet run --project src/Phase3_2D/3.2_SpriteAnimation/3.2_SpriteAnimation.csproj
 dotnet run --project src/Phase3_2D/3.2b_SpriteAnimation_2x4/3.2b_SpriteAnimation_2x4.csproj
 dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAnimation_MultiSheet.csproj
+dotnet run --project src/Phase3_2D/3.3_MovingSprites/3.3_MovingSprites.csproj
 ```
 
 ### Phase 1 Projects
@@ -256,6 +265,7 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 - **3.2**: Sprite Animation (1x8 layout with auto-calculated UVs)
 - **3.2b**: Sprite Animation 2x4 (2 rows × 4 columns with spacing/padding support)
 - **3.2c**: Multi-Sheet Animation (enhanced controls with continuous key holding)
+- **3.3**: Moving Sprites (player + enemies with physics, collision, AI)
 
 ---
 
@@ -264,13 +274,12 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 ### Immediate Tasks
 
 1. ✅ Complete Phase 2 - All projects done!
-2. ✅ Complete Phase 3 Projects 3.1, 3.2, 3.2b, 3.2c - All done!
-3. ⏳ **NEXT**: Implement Project 3.3 - Moving Sprites
-   - Keyboard-controlled sprite movement
-   - Collision detection basics
-   - Multiple sprites on screen
-4. ⏳ Implement Project 3.4 - Simple 2D Game
-5. ⏳ Implement Project 3.5 - Particle System
+2. ✅ Complete Phase 3 Projects 3.1, 3.2, 3.2b, 3.2c, 3.3 - All done!
+3. ⏳ **NEXT**: Implement Project 3.4 - Simple 2D Game
+   - Build a complete game (Pong or Breakout clone)
+   - Score system, game states, win/lose conditions
+4. ⏳ Implement Project 3.5 - Particle System
+5. ⏳ Complete Phase 3 and move to Phase 4 (3D Graphics)
 
 ### Upcoming Phases
 
@@ -296,6 +305,7 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 - [x] ✅ **Built sprite animations**
 - [x] ✅ **Implemented multi-sheet animation**
 - [x] ✅ **Added continuous key holding**
+- [x] ✅ **Built moving sprites with physics and AI**
 - [ ] ⏳ Build 3D scenes
 - [ ] ⏳ Implement lighting
 - [ ] ⏳ Create final project

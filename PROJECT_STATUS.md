@@ -40,12 +40,12 @@ test/
 - [x] **Project 3.2**: Sprite Animation (1x8 layout with auto-calculated UVs) ✅
 - [x] **Project 3.2b**: Sprite Animation 2x4 (2 rows × 4 columns with spacing/padding) ✅
 - [x] **Project 3.2c**: Multi-Sheet Animation (enhanced controls with continuous key holding) ✅
-- [ ] **Project 3.3**: Moving Sprites ⏳
+- [x] **Project 3.3**: Moving Sprites (player + enemies with physics, collision, AI) ✅
 - [ ] **Project 3.4**: Simple 2D Game ⏳
 - [ ] **Project 3.5**: Particle System ⏳
 
 **Phase 1 & 2 Status: COMPLETE! 🎉**  
-**Phase 3 Status: 60% Complete (3/5 projects)**
+**Phase 3 Status: 80% Complete (4/5 projects)**
 
 ---
 
@@ -60,6 +60,7 @@ dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_Texture
 dotnet run --project src/Phase3_2D/3.2_SpriteAnimation/3.2_SpriteAnimation.csproj
 dotnet run --project src/Phase3_2D/3.2b_SpriteAnimation_2x4/3.2b_SpriteAnimation_2x4.csproj
 dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAnimation_MultiSheet.csproj
+dotnet run --project src/Phase3_2D/3.3_MovingSprites/3.3_MovingSprites.csproj
 ```
 
 ### Option 2: Using Visual Studio
@@ -99,12 +100,13 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 - Row/column-based frame calculation
 - Enhanced UV offset system
 
-**Project 3.2c**: Multi-Sheet Animation
-- Multiple sprite sheets (1x8 and 2x4 layouts)
-- Enhanced keyboard controls (Numbers, Space, Arrows)
-- Continuous key holding for smooth control
-- Pause/unpause with manual frame control
-- Direct sprite sheet selection
+**Project 3.3**: Moving Sprites
+- Player sprite with WASD/arrow key controls
+- Multiple enemy sprites with patrol AI
+- Physics simulation (gravity, jump, ground collision)
+- AABB collision detection and resolution
+- Sprite facing flip based on movement direction
+- Move/idle animation states
 
 ### Learning Materials
 
@@ -141,6 +143,12 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 17. **Animation Timing**: FPS control, delta time
 18. **Multi-texture Management**: Switching between sprite sheets
 19. **Continuous Key Holding**: Key repeat rate control
+20. **Sprite Movement**: Player controls with WASD/arrows
+21. **Physics Simulation**: Gravity, jump, ground collision
+22. **AI Behavior**: Enemy patrol patterns
+23. **Collision Detection**: AABB collision resolution
+24. **Sprite Facing**: Horizontal flip based on movement direction
+25. **Animation States**: Move vs idle animation logic
 
 ---
 
@@ -148,14 +156,13 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 
 ### Immediate
 
-**NEXT**: Project 3.3 - Moving Sprites
-- Keyboard-controlled sprite movement
-- Collision detection basics
-- Multiple sprites on screen
+**NEXT**: Project 3.4 - Simple 2D Game
+- Build a complete game (Pong or Breakout clone)
+- Score system, game states, win/lose conditions
+- Multiple game objects and interactions
 
 ### Upcoming Projects
 
-- **3.4**: Simple 2D Game (Pong or Breakout clone)
 - **3.5**: Particle System (visual effects)
 
 ---
@@ -176,12 +183,12 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 | ------------------------ | -------------- | ------------------ |
 | Phase 1: Foundation      | ✅ Complete    | 3/3                |
 | Phase 2: First Triangle  | ✅ Complete    | 4/4                |
-| Phase 3: 2D Graphics     | 🟡 In Progress  | 3/5                |
+| Phase 3: 2D Graphics     | 🟡 In Progress  | 4/5                |
 | Phase 4: 3D Introduction | ⚪ Not Started | 0/6                |
 | Phase 5: Advanced Topics | ⚪ Not Started | 0/5                |
 | Phase 6: Final Project   | ⚪ Not Started | 0/1                |
 
-**Total Progress**: 11/24 projects (46%)
+**Total Progress**: 12/24 projects (50%)
 
 ---
 
@@ -196,4 +203,4 @@ dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAn
 ---
 
 **Last Updated**: December 20, 2024
-**Next Milestone**: Complete Project 3.3 - Moving Sprites
+**Next Milestone**: Complete Project 3.4 - Simple 2D Game

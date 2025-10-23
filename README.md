@@ -54,7 +54,7 @@ This course is divided into 6 phases, taking you from complete beginner to confi
 - ✅ **3.2**: Sprite Animation - Sprite sheets with auto-calculated UVs
 - ✅ **3.2b**: Sprite Animation 2x4 - 2 rows × 4 columns with spacing/padding support
 - ✅ **3.2c**: Multi-Sheet Animation - Enhanced controls with continuous key holding
-- ⏳ **3.3**: Moving Sprites - Keyboard control
+- ✅ **3.3**: Moving Sprites - Player + enemies with physics, collision, AI
 - ⏳ **3.4**: Simple 2D Game - Pong or Breakout!
 - ⏳ **3.5**: Particle System - Effects
 
@@ -227,7 +227,7 @@ Happy coding! 🚀✨
 
 ---
 
-**Current Status**: Phase 3 IN PROGRESS — 3.1, 3.2, 3.2b, 3.2c complete ✅  
+**Current Status**: Phase 3 IN PROGRESS — 3.1, 3.2, 3.2b, 3.2c, 3.3 complete ✅  
 Run examples (PowerShell):
 
 ```
@@ -237,6 +237,7 @@ dotnet run --project src/Phase3_2D/3.1b_TexturedQuad_PreserveAspect/3.1b_Texture
 dotnet run --project src/Phase3_2D/3.2_SpriteAnimation/3.2_SpriteAnimation.csproj
 dotnet run --project src/Phase3_2D/3.2b_SpriteAnimation_2x4/3.2b_SpriteAnimation_2x4.csproj
 dotnet run --project src/Phase3_2D/3.2c_SpriteAnimation_MultiSheet/3.2c_SpriteAnimation_MultiSheet.csproj
+dotnet run --project src/Phase3_2D/3.3_MovingSprites/3.3_MovingSprites.csproj
 ```
 
 Note: PowerShell doesn't support '&&'. Run commands separately or use `dotnet run --project` as shown.
